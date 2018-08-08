@@ -1,5 +1,5 @@
 # HteOS
-[HteOS](http://www.hteos.com)HteOS是一款全新的Web桌面应用开发框架，Win10 Metro UI风格设计，响应式设计适配PC端、移动端所有设备，广泛应用于Web应用开发，移动应用开发、业务系统、智能电视开发。
+[HteOS](http://www.hteos.com)是一款全新的Web桌面应用开发框架，Win10 Metro UI风格设计，响应式设计适配PC端、移动端所有设备，广泛应用于Web应用开发，移动应用开发、业务系统、智能电视开发。
 ## 简介
 本项目是基于HteOS4.0构建的Web桌面应用，后台基于SpringBoot2构建。在线演示地址：[http://demo.hteos.com](http://demo.hteos.com)
 
