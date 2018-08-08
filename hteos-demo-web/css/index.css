@@ -1,0 +1,84 @@
+.hte-profile {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    padding: 10px 20px 20px 20px;
+}
+
+.hte-profile-inner {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    position: relative;
+}
+
+.hte-profile-footer {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    margin: 0px;
+    z-index: 1;
+    width: 100%;
+}
+
+.hte-profile-action {
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    padding: 6px;
+}
+
+.hte-profile-action .glyphicon {
+    font-size: 20px;
+}
+
+.hte-profile-action > a {
+    width: 100%;
+    color: #fff;
+    line-height: 1.5;
+}
+
+.hte-profile-content {
+    padding-bottom: 85px;
+    height: 100%;
+    position: relative;
+}
+
+.hte-profile-panel {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    bottom: 80px;
+    width: 100%;
+    display: none;
+    overflow: auto;
+}
+
+.hte-profile-panel.active {
+    display: block;
+}
+
+.hte-profile-face > img {
+    max-height: 120px;
+    max-width: 120px;
+}
+
+.hte-appmanager-search-result{
+    padding: 10px 0px;
+}
+
+.hte-taskmanager table{
+    font-size: 14px;
+    text-align: center;
+}
+
+.hte-taskmanager img{
+    max-height: 15px;
+    margin-right: 5px;
+}
+
+
+.hte-taskmanager th{
+    text-align: center;
+}

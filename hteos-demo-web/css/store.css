@@ -1,0 +1,464 @@
+.store-main {
+    background-color: #eee;
+    min-height: 100%;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
+    max-width: 100%;
+    border-right: 1px solid #bdbdbd;
+    border-left: 1px solid #bdbdbd;
+    color: #333;
+}
+
+.app-preview {
+    margin-top: 30px;
+}
+
+.app-preview .carousel-indicators {
+    top: -30px;
+}
+
+.app-preview .carousel-indicators li {
+    border: 1px solid #ccc;
+}
+
+.app-preview .carousel-indicators .active {
+    background-color: #333;
+}
+
+.app-preview .carousel-control.left {
+    background-image: none;
+}
+
+.app-preview .carousel-control.right {
+    background-image: none;
+}
+
+.app-wrapper {
+    height: 200px;
+    display: inline-block;
+    padding: 0px;
+    vertical-align: top;
+    border-bottom: 1px solid #c6c6c6;
+    border-right: 1px solid #c6c6c6;
+    background-color: #f8f8f8;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.app-wrapper:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) inset;
+}
+
+.app-wrapper-top {
+    border-top: 1px solid #c6c6c6;
+}
+
+.app-wrapper-last {
+    border-right: none;
+}
+
+.app-image {
+    border: solid 1px #ddd;
+    margin: -1px;
+    width: 277px;
+    height: 134px;
+}
+
+.app-overview {
+    position: absolute;
+    bottom: 0px;
+    height: 56px;
+    padding-left: 11px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-right: 11px;
+    width: 100%;
+}
+
+.app-name {
+    font-size: 13px;
+    font-weight: bold;
+    color: #262626;
+    margin-left: 50px;
+    margin-top: 3px;
+}
+
+.app-score .glyphicon {
+    font-size: 12px;
+}
+
+.app-score {
+    margin-left: 50px;
+}
+
+.app-back {
+    position: absolute;
+    left: 0px;
+    top: 200px;
+    z-index: 1px;
+    height: 198px;
+    background-color: #eee;
+    width: 100%;
+    padding: 20px;
+    overflow: hidden;
+    box-shadow: inset 0px 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.app-icon {
+    height: 36px;
+    width: 36px;
+    float: left;
+}
+
+.app-action {
+    font-size: 12px;
+    position: absolute;
+    top: 30px;
+    right: 20px;
+    padding: 3px 15px;
+}
+
+.app-back .app-subject {
+    padding-top: 20px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    height: 100px;
+    font-size: 13px;
+}
+
+.app-wrapper-inner {
+    height: 200px;
+    margin: 10px auto 0px;
+    width: 277px;
+    max-width: 100%;
+}
+
+.app-channel {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-height: 200px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.app-channel-preloader {
+    height: 200px;
+    line-height: 200px;
+    width: 100%;
+    font-size: 14pt;
+    text-align: center;
+    color: #333;
+}
+
+.app-channel-preloader i {
+    font-size: 20pt;
+}
+
+.store-nav {
+    margin-bottom: 10px;
+    border-radius: 0px;
+    padding: 5px;
+    min-height: 0;
+    border-right: none;
+    border-left: none;
+}
+
+.store-footer {
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    border-top: 1px solid #bdbdbd;
+    font-size: 16px;
+}
+
+.store-nav .navbar-nav > li > a {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.app-dialog .modal-body {
+    padding: 0px;
+    background-color: #f1f1f1;
+}
+
+.app-tab {
+    min-height: 450px;
+    overflow-y: auto;
+}
+
+.app-tabs {
+    background-color: #fff
+}
+
+.app-tabs > li.active > a, .app-tabs > li.active > a:hover, .app-tabs > li.active > a:focus {
+    border-top-color: transparent;
+    border-left-color: transparent;
+}
+
+.app-tabs > li > a {
+    border-right: 1px solid #ccc;
+    padding: 10px 60px;
+    margin-right: 0px;
+}
+
+.app-action-d {
+    padding: 15px;
+    text-align: right;
+}
+
+.app-overview-d {
+    padding: 40px;
+}
+
+.app-detail-d {
+    padding: 40px;
+}
+
+.app-review-d {
+    padding: 40px;
+}
+
+.app-store-search {
+    margin-top: 20px;
+}
+
+@media screen and (max-width: 500px) {
+    .app-tabs {
+        position: relative;
+        width: 100%;
+    }
+
+    .app-tabs > li {
+        display: table-cell;
+        width: 1%;
+        text-align: center;
+        float: none;
+    }
+
+    .app-tabs > li > a {
+        padding: 10px 0px;
+    }
+
+    .app-overview-d {
+        padding: 15px;
+    }
+
+    .app-detail-d {
+        padding: 15px;
+    }
+
+    .app-review-d {
+        padding: 15px;
+    }
+
+    .app-dialog-header {
+        padding: 10px;
+    }
+
+    .app-store-search {
+        margin-top: 0px;
+    }
+}
+
+.app-dialog-header {
+    position: relative;
+}
+
+.app-icon-d {
+    height: 64px;
+    width: 64px;
+    float: left;
+}
+
+.app-icon-d img {
+    height: 50px;
+    width: 50px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+.app-info-d {
+    display: inline-block;
+    float: left;
+}
+
+.app-name-d {
+    font-size: 28px;
+    font-weight: normal;
+    color: #262626;
+    margin: 0;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #262626;
+    margin: 5px 0px;
+}
+
+.app-desc-d {
+    display: inline-block;
+    font-size: 12px;
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.app-desc-item {
+    display: inline-block;
+}
+
+.app-desc-splitter {
+    height: 15px;
+    width: 1px;
+    display: inline;
+    border-left: 1px dotted #a6a6a6;
+    margin: 0 10px;
+    vertical-align: middle;
+}
+
+.app-category {
+    font-size: 11px;
+    color: #1c5ac4;
+}
+
+.app-provider {
+    display: inline;
+    max-width: 260px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 11px;
+    color: #b2b2b2;
+}
+
+.app-count {
+    font-size: 11px;
+    color: #a6a6a6;
+    font-style: italic;
+}
+
+.app-score-d .glyphicon {
+    margin-right: 5px;
+}
+
+.app-score-d .rating .glyphicon {
+    font-size: 22px;
+}
+
+.app-score-d .rating-num {
+    margin-top: 0px;
+    font-size: 54px;
+}
+
+.app-score-d .progress {
+    margin-bottom: 5px;
+}
+
+.app-score-d .progress-bar {
+    text-align: left;
+}
+
+.app-score-d .rating-desc .col-md-3 {
+    padding-right: 0px;
+}
+
+.app-score-d .sr-only {
+    margin-left: 5px;
+    overflow: visible;
+    clip: auto;
+}
+
+.app-score-d .rating {
+    margin-bottom: 5px;
+}
+
+.app-detail-title {
+    color: #262626;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 0;
+}
+
+.app-detail-subject {
+    color: #333;
+    font-size: 15px;
+    font-weight: bold;
+    word-wrap: break-word;
+}
+
+.app-detail-desc {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap !important;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
+
+.app-reviews {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.app-reviews li {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px dotted #B3A9A9;
+}
+
+.app-reviews li.left .app-review-body {
+    margin-left: 60px;
+}
+
+.app-reviews li.right .app-review-body {
+    margin-right: 60px;
+}
+
+.app-reviews li .app-review-body p {
+    margin: 0;
+    color: #777777;
+}
+
+.app-review-account-face {
+    height: 50px;
+    width: 50px;
+}
+
+.app-review-stars {
+    font-size: 16px;
+    display: inline-block;
+    margin-right: 10px;
+    padding-top: 10px;
+}
+
+.app-review-score {
+    font-size: 12px;
+    margin-left: 10px;
+    color: #333;
+}
+
+.store-preloader {
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 10px 0px;
+    text-align: center;
+    display: none;
+    background-color: #fff;
+    z-index: 9999;
+}
+
+.store-preloader img {
+    max-height: 32px;
+}
+
+.app-category-list {
+    min-height: 400px;
+}

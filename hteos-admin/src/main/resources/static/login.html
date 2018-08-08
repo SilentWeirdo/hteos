@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<title>HteOS - 控制台登录</title>
+<meta charset="UTF-8"/>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta content="IE=edge" http-equiv="X-UA-Compatible">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,userVo-scalable=no">
+<link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="shortcut icon" href="img/shortcut.png">
+<style type="text/css">
+    body {
+        background-color: rgb(31, 83, 160);
+        font-family: 'Microsoft YaHei', 'Helvetica Neue', 'Luxi Sans',
+        'DejaVu Sans', Tahoma, 'Hiragino Sans GB', STHeiti;
+        margin: 0px;
+    }
+
+    .login-header {
+        background-color: transparent;
+        border: none;
+        margin-top: 15px;
+        margin-bottom: 10px;
+        z-index: 0;
+    }
+
+    .login-brand {
+        width: 400px;
+    }
+
+    .navbar-brand > a {
+        text-decoration: none;
+    }
+
+    .vertical-offset-100 {
+        padding-top: 150px;
+    }
+
+    .form-signin {
+        width: 300px;
+        margin: 0 auto;
+    }
+
+    .form-signin a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .form-signin a:hover {
+        color: #ccc;
+    }
+
+    .form-signin .form-signin-heading, .form-signin
+    .checkbox {
+        margin-bottom: 10px;
+    }
+
+    .form-signin .checkbox {
+        font-weight: normal;
+    }
+
+    .form-signin .form-control {
+        position: relative;
+        height: auto;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .form-signin .form-control :focus {
+        z-index: 2;
+    }
+
+    .form-signin input [type="text"] {
+        border-radius: 0;
+    }
+
+    .form-signin input [type="password"] {
+        border-radius: 0;
+    }
+
+    .need-help {
+        margin-top: 10px;
+    }
+
+    .new-user {
+        display: block;
+        margin-top: 10px;
+    }
+</style>
+<script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="navbar navbar-default navbar-fixed-top login-header"
+     style="z-index: 10">
+    <div class="container">
+        <div class="navbar-brand login-brand">
+            <img alt="" src="/img/logo.png" height="30px"
+                 style="margin-top: -12px;margin-right: 10px;display: inline-block;"> <a
+                href="${ctx}/"
+                style="text-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);color:#fff;font-size: 24px;">
+            <span style="font-family:Segoe Script">HteOS</span> -
+            <small>控制台登录</small>
+        </a>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row vertical-offset-100">
+        <div class="col-sm-12 col-xs-12 col-md-12"
+             style="text-align: center;">
+            <form id="login-form" class="form-signin" action="/login" method="post">
+                <div id="login-error" class="alert alert-danger alert-dismissable" style="display: none">
+                </div>
+                </c:if>
+                <div class="user-face">
+                    <img src="img/face_150.png" alt="">
+                </div>
+                <br/>
+                <div class="form-group">
+                    <input type="text" name="username" class="form-control"
+                           placeholder="账号" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" class="form-control"
+                           placeholder="密码" required>
+                </div>
+
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-xs-12 col-sm-12 col-md-12" style="text-align: center;">
+                        <button id="login-btn" class="btn btn-success btn-block"
+                                type="submit" data-loading-text="正在登录..." style="margin: 0 auto;width:50%;">登&nbsp;&nbsp;录
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

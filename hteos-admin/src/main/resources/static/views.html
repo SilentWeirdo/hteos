@@ -1,0 +1,320 @@
+<div class="access-container">
+	<div class="row">
+		<div class="col-md-12">
+			<h2 class="hte-task-tile"  style="margin-bottom: 10px;">访客</h2>
+		</div>
+	</div>
+	<div class="row" >
+		<div class="col-md-6 col-xs-12 col-sm-12" style="margin: 10px 0px;">
+			<div class="btn-group time-group" data-toggle="buttons" >
+				<label class="btn btn-default active" id="stat-today"> 
+					<input type="radio" name="range" value="1" checked="checked"> 今天
+				</label> 
+				<label class="btn btn-default" id="stat-yestoday"> 
+					<input type="radio" name="range" value="2"> 昨天
+				</label>
+				<label class="btn btn-default " id="stat-7"> 
+					<input type="radio" name="range" value="3" >7天
+				</label>
+				<label class="btn btn-default "  id="stat-30"> 
+					<input type="radio" name="range"  value="4">30天
+				</label>
+				<!-- <label class="btn btn-default " id="stat-custom"> 
+					<input type="radio" name="range"  value="5" >自定义
+				</label> -->
+			</div>
+		</div>
+		<div class="col-md-6 col-xs-12 col-sm-12" >
+			<form class="form-inline condition-form">
+				<div class="form-group ">
+					<input id="start-date" type="date" class="form-control"
+						placeholder="开始日期" > 
+				</div>
+				<div class="form-group ">
+					<input id="end-date" type="date" class="form-control"
+						placeholder="结束日期" > 
+				</div>
+				<button id="date-search-btn" class="btn btn-default" type="button">
+					<span class="glyphicon glyphicon-search"></span> 查询
+				</button>
+			</form>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="table-responsive">
+				<table class="data-table table table-bordered access-table" style="font-size:14px;">
+					<thead>
+						<tr>
+							<th>IP</th>
+							<th>时间</th>
+							<th>位置</th>
+							<th>设备</th>
+							<th>操作系统</th>
+							<th class="stat-auto-hide" >浏览器</th>
+							<th class="stat-auto-hide" >版本</th>
+							<th class="stat-auto-hide" style="width:200px;">Referer</th>
+							<th>流量</th>
+							<th>时长</th>
+						</tr>
+					</thead>
+					<tbody>
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<table style="display: none;">
+			<tr id="data-row-tpl">
+				<td>{ip}</td>
+				<td>{time}</td>
+				<td>{position}</td>
+				<td>{device}</td>
+				<td>{os}</td>
+				<td class="stat-auto-hide" >{browser}</td>
+				<td class="stat-auto-hide" >{browserVersion}</td>
+				<td class="stat-auto-hide" style="width: 200px;word-break:break-all;">{referer}</td>
+				<td>{accessCount}</td>
+				<td>{duration}</td>
+			</tr>
+		</table>
+	</div>
+	<div class="row access-pagination-row">
+		<div class="col-md-6 col-xs-12 col-sm-12" style="padding-top:20px">
+			<span class="total"></span>条数据
+		</div>
+		<div class="col-md-6 col-xs-12 col-sm-12">
+			<ul class="pagination stat-pagination">
+				<li class="pagination-prev"><a href="#">&laquo;</a></li>
+				<li class="pagination-next"><a href="#">&raquo;</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	(function() {
+		var param = {
+			page : 1,
+			size : 20
+		};
+
+		$(".pagination-prev").click(function(){
+			param.page = 1;
+			search();
+		});
+
+		$(".pagination-next").click(function(){
+			param.page = pages;
+			search();
+		});
+		
+		function setDate(days){
+			//$("#start-date").attr("disabled","disabled");
+			//$("#end-date").attr("disabled","disabled");
+			var startDate = new Date();
+			days = days || 0;
+			var endDate = new Date();
+			startDate.setTime(startDate.getTime() - days * 24 * 60 * 60 * 1000);
+			$("#start-date").val(formatDate(startDate));
+			$("#end-date").val(formatDate(endDate));
+			param.page = 1;
+			search();
+		}
+		
+		function formatDate(date){
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			day = day > 9 ? day : '0' + day;
+			month = month > 9 ? month : '0' + month;
+			return year + '-' + month + '-' + day;
+		}
+		
+		$("#stat-7").click(function(){
+			setDate(7);
+		});
+		
+		$("#stat-30").click(function(){
+			setDate(30);
+		});
+		
+		$("#stat-yestoday").click(function(){
+			setDate(1);
+		});
+		
+		$("#stat-today").click(function(){
+			setDate();
+		});
+		
+		$("#stat-custom").click(function(){
+			//$("#start-date").removeAttr("disabled");
+			//$("#end-date").removeAttr("disabled");
+		});
+		
+		setDate();
+
+		var records = {};
+		$(document.body).off("click", ".access-container .pagination-page > a");
+		$(document.body).on("click", ".access-container .pagination-page > a",
+				function(event) {
+					param.page = $(this).text();
+					search();
+					event.preventDefault();
+				});
+
+		$("#date-search-btn").click(function() {
+			param.page = 1;
+			search();
+		});
+
+		function search() {
+			param.start = $("#start-date").val() + " 00:00:00";
+			param.end = $("#end-date").val() + " 23:59:59";
+			$(".access-container .empty-row").remove();
+			$(document.body).mask("正在加载...");
+			$.ajax({
+				url : "/statistics/access/list",
+				data : param,
+				success : function(data) {
+					var total = data.total;
+					$(".access-container .data-row").remove();
+					pagination(total);
+					render(data.content);
+				},
+				error : function() {
+
+				},
+				complete : function() {
+					$(document.body).unmask();
+				}
+			});
+		}
+
+		function formate(msd) {
+			if(msd <= 0){
+				return "0s";
+			}
+		    var time = parseFloat(msd) / 1000;
+		    if (null != time && "" != time) {
+		        if (time > 60 && time < 60 * 60) {
+		            time = parseInt(time / 60.0) + "m" + parseInt((parseFloat(time / 60.0) -
+		                parseInt(time / 60.0)) * 60) + "s";
+		        }
+		        else if (time >= 60 * 60 && time < 60 * 60 * 24) {
+		            time = parseInt(time / 3600.0) + "h" + parseInt((parseFloat(time / 3600.0) -
+		                parseInt(time / 3600.0)) * 60) + "m" +
+		                parseInt((parseFloat((parseFloat(time / 3600.0) - parseInt(time / 3600.0)) * 60) -
+		                parseInt((parseFloat(time / 3600.0) - parseInt(time / 3600.0)) * 60)) * 60) + "s";
+		        }
+		        else {
+		            time = parseInt(time) + "s";
+		        }
+		    }
+		    return time;
+		}
+
+		function render(rows) {
+			var tpl = $(".access-container #data-row-tpl");
+			if (rows.length > 0) {
+				$(".access-container .pagination-row").show();
+				for (var i = 0; i < rows.length; i++) {
+					var data = rows[i];
+					var row = tpl.clone();
+					var html = row.html();
+					html = html.replace("{ip}", data.ip).replace("{time}",
+							data.day + " " + data.time).replace("{userVo}", data.userVo).replace(
+							"{position}", data.province + data.city).replace("{referer}",
+							data.referer).replace("{userAgent}",
+							data.userAgent).replace("{accessCount}",
+							data.accessCount).replace("{device}",data.device).replace("{os}",data.os)
+							.replace("{browser}",data.browser).replace("{browserVersion}",data.browserVersion);
+					var duration = data.duration;
+					var dur = "";
+					var h = Math.floor(duration / (1000 * 60 * 60));
+					var m = Math.floor((duration - (h * 1000 * 60 * 60)) / (60 * 1000));
+					var s = Math.floor((duration - ((h * 1000 * 60 * 60) - (m * 1000 * 60))) /  1000);
+				/*	if(h){
+						dur += h + "h";
+					}
+					if(m){
+						dur += m + "m";
+					}
+					dur += s + "s";*/
+					html = html.replace("{duration}",formate(duration))
+					row.html(html);
+					row.show();
+					row.attr("id", "reocrd-" + data.id);
+					row.data("record", data.id);
+					row.addClass("data-row");
+					records[data.id] = data;
+					$(".access-table > tbody").append(row);
+				}
+			} else {
+				$(".pagination-row").hide();
+				var row = tpl.clone();
+				row.removeAttr("id");
+				var colspan = $(".access-container .data-table > thead>tr").find("th:visible").length;
+				row.html("<td class='empty-row' colspan='"+colspan+"' align='center'>没有查询到访问记录</td>");
+				$(".access-table > tbody").append(row);
+			}
+		}
+
+		function pagination(total) {
+			$(".access-container .pagination-page").remove();
+			$(".access-container .pagination > .active").remove();
+			$(".access-container .total").html(total);
+			var pages = Math.ceil(total / param.size);
+			window.pages = pages;
+			var current = parseInt(param.page);
+			paginations = [];
+			if(pages <= 5){
+				for (var i = 1; i <= pages; i++) {
+					paginations.push(i);
+				}
+				paginations.reverse();
+			}else if(pages - current <= 2){
+				for (var i = pages; i >= pages - 4; i--) {
+					paginations.push(i);
+				}
+			}else{
+				if(current > 2){
+					paginations.push(current - 2);
+					paginations.push(current - 1);
+					paginations.push(current);
+					paginations.push(parseInt(current + 1));
+					paginations.push(parseInt(current + 2));
+					paginations.reverse();
+				}else{
+					for (var i = 1; i <= (pages > 5 ? 5 : pages); i++) {
+						paginations.push(i);
+					}
+					paginations.reverse();
+				}
+			}
+			var pre = $(".access-container .pagination-prev");
+			for (var i = 0; i < paginations.length; i++) {
+				var pagination = $("<li class=\"pagination-page\"><a href=\"#\">"
+						+ paginations[i] + "</a></li>");
+				if (paginations[i] == current) {
+					pagination.addClass("active");
+					pagination.removeClass("pagination-page");
+				}
+				pagination.insertAfter(pre)
+			}
+		}
+		search();
+
+		function getSelected() {
+			var selected = [];
+			$(".access-container .data-table > tbody").find("input:checkbox")
+					.each(function() {
+						var row = $(this).parents("tr");
+						if ($(this).is(":checked") === true) {
+							selected.push(records[row.data("record")]);
+						}
+					});
+			return selected;
+		}
+	})();
+</script>

@@ -1,0 +1,239 @@
+<div class="feedback-container">
+<div class="row">
+	<div class="col-md-12">
+		<h2 class="hte-task-tile"  style="margin-bottom: 20px;">意见反馈</h2>
+	</div>
+</div>
+<div class="row" >
+		<div class="col-md-6 col-xs-12 col-sm-12" style="margin: 10px 0px;">
+			<div class="btn-group time-group" data-toggle="buttons" >
+				<label class="btn btn-default active" id="feedback-today"> 
+					<input type="radio" name="range" value="1" checked="checked"> 今天
+				</label> 
+				<label class="btn btn-default " id="feedback-7"> 
+					<input type="radio" name="range" value="3" >最近7天
+				</label>
+				<label class="btn btn-default "  id="feedback-30"> 
+					<input type="radio" name="range"  value="4">最近30天
+				</label>
+				<label class="btn btn-default " id="feedback-custom"> 
+					<input type="radio" name="range"  value="5" >自定义
+				</label>
+			</div>
+		</div>
+		<div class="col-md-6 col-xs-12 col-sm-12" >
+		<form class="form-inline condition-form">
+			<div class="form-group ">
+				<input id="feedback-start-date" type="date" class="form-control"
+					placeholder="开始日期" disabled="disabled"> 
+			</div>
+			<div class="form-group ">
+				<input id="feedback-end-date" type="date" class="form-control"
+					placeholder="结束日期" disabled="disabled"> 
+			</div>
+			<button id="date-search-btn" class="btn btn-default" type="button">
+				<span class="glyphicon glyphicon-search"></span> 查询
+			</button>
+			</form>
+		</div>
+	</div>
+<div class="row">
+	<div class="col-md-12">
+		<div class="table-responsive">
+			<table class="data-table table table-bordered" style="font-size: 14px;">
+				<thead>
+					<tr>
+						<th>日期</th>
+						<th>时间</th>
+						<th>IP</th>
+						<th>邮箱</th>
+						<th style="width: 400px;">内容</th>
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<table style="display: none;">
+		<tr class="data_row_tpl">
+			<td>{day}</td>
+			<td>{time}</td>
+			<td>{ip}</td>
+			<td>{email}</td>
+			<td style="width: 400px;">{content}</td>
+		</tr>
+	</table>
+</div>
+<div class="row pagination-row" >
+	<div class="col-md-6" style="padding-top:20px">
+		<span class="total"></span>条数据
+	</div>
+	<div class="col-md-6">
+		<ul class="pagination pull-right">
+			<li class="pagination-prev"><a href="#">&laquo;</a></li>
+			<li class="pagination-next"><a href="#">&raquo;</a></li>
+		</ul>
+	</div>
+</div>
+</div>
+<script type="text/javascript">
+	(function() {
+		
+		var param = {
+			page : 1,
+			size : 20
+		};
+		
+		function setDate(days){
+			$("#feedback-start-date").attr("disabled","disabled");
+			$("#feedback-end-date").attr("disabled","disabled");
+			var startDate = new Date();
+			days = days || 0;
+			var endDate = new Date();
+			startDate.setTime(startDate.getTime() - days * 24 * 60 * 60 * 1000);
+			$("#feedback-start-date").val(formatDate(startDate));
+			$("#feedback-end-date").val(formatDate(endDate));
+		}
+		
+		function formatDate(date){
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			day = day > 9 ? day : '0' + day;
+			month = month > 9 ? month : '0' + month;
+			return year + '-' + month + '-' + day;
+		}
+		
+		$("#feedback-7").click(function(){
+			setDate(7);
+		});
+		
+		$("#feedback-30").click(function(){
+			setDate(30);
+		});
+		
+		$("#feedback-today").click(function(){
+			setDate();
+		});
+		
+		$("#feedback-custom").click(function(){
+			$("#feedback-start-date").removeAttr("disabled");
+			$("#feedback-end-date").removeAttr("disabled");
+		});
+
+		var records = {};
+		$(document.body).off("click", ".feedback-container .pagination-page > a");
+		$(document.body).on("click", ".feedback-container .pagination-page > a", function(event) {
+			param.page = $(this).text();
+			search();
+			event.preventDefault();
+		});
+
+		$("#date-search-btn").click(function() {
+			param.day = $("#date-condition-input").val();
+			param.page = 1;
+			search();
+		});
+
+		function search() {
+			$(".feedback-container .empty-row").remove();
+			$(document.body).mask("正在加载...");
+			$.ajax({
+				url : "/feedback/list",
+				data : param,
+				success : function(data) {
+					var total = data.total;
+					$(".feedback-container .data-row").remove();
+					pagination(total);
+					render(data.content);
+				},
+				error : function() {
+
+				},
+				complete : function() {
+					$(document.body).unmask();
+				}
+			});
+		}
+
+		function render(rows) {
+			var tpl = $(".feedback-container .data_row_tpl");
+			if(rows.length > 0){
+				$(".feedback-container .pagination-row").show();
+				for (var i = 0; i < rows.length; i++) {
+					var data = rows[i];
+					var row = tpl.clone();
+					var html = row.html();
+					html = html.replace("{ip}",
+							data.ip).replace("{time}", data.time)
+							.replace("{day}", data.day).replace(
+									"{email}", data.email).replace(
+									"{content}", data.content);
+					row.html(html);
+					row.show();
+					row.attr("id", "reocrd-" + data.id);
+					row.data("record", data.id);
+					row.addClass("data-row");
+					records[data.id] = data;
+					$(".feedback-container .data-table > tbody").append(row);
+				}
+			}else{
+				$(".pagination-row").hide();
+				var row = tpl.clone();
+				row.removeAttr("id");
+				row.html("<td class='empty-row' colspan='6' align='center'>没有查询到反馈记录</td>");
+				$(".feedback-container .data-table > tbody").append(row);	
+			}
+		}
+
+		function pagination(total) {
+			$(".feedback-container .pagination-page").remove();
+			$(".feedback-container .pagination > .active").remove();
+			$(".feedback-container .total").html(total);
+			var pages = Math.ceil(total / param.size);
+			var current = parseInt(param.page);
+			paginations = [];
+			if(pages <= 5){
+				for (var i = 1; i <= pages; i++) {
+					paginations.push(i);
+				}
+				paginations.reverse();
+			}else if(pages - current <= 2){
+				for (var i = pages; i >= pages-5; i--) {
+					paginations.push(i);
+				}
+			}else{
+				paginations.push(current - 2);
+				paginations.push(current - 1);
+				paginations.push(current);
+				paginations.push(parseInt(current + 1));
+				paginations.push(parseInt(current + 2));
+				paginations.reverse();
+			}
+			var pre = $(".feedback-container .pagination-prev");
+			for (var i = 0; i < paginations.length; i++) {
+				var pagination = $("<li class=\"pagination-page\"><a href=\"#\">"
+						+ paginations[i] + "</a></li>");
+				if (paginations[i] == current) {
+					pagination.addClass("active");
+					pagination.removeClass("pagination-page");
+				}
+				pagination.insertAfter(pre)
+			}
+		}
+		search();
+
+		function getSelected() {
+			var selected = [];
+			$(".data-table > tbody").find("input:checkbox").each(function() {
+				var row = $(this).parents("tr");
+				if ($(this).is(":checked") === true) {
+					selected.push(records[row.data("record")]);
+				}
+			});
+			return selected;
+		}
+	})();
+</script>

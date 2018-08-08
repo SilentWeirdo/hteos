@@ -1,0 +1,90 @@
+<html lang="zh_cn">
+	<head>
+		<title>HteOS - Web桌面应用框架 - 演示站点</title>
+		<meta chartset="utf-8">
+		<meta http-equiv="Pragma" content="no-cache">		
+		<meta http-equiv="Cache-Control" content="no-store,must-revalidate">
+		<meta http-equiv="expires" content="0"/>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<meta content="IE=edge" http-equiv="X-UA-Compatible">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+		<meta name="keywords" content="HteOS,webos,WebDesktop,Web桌面,HTML5,Win8Web,Win8MetroWeb,web桌面,webdesk,webdesktop,云桌面,web云桌面，定制化桌面">
+		<meta name="description" content="HteOS - 演示站点，HteOS(www.hteos.com)是一款Win8 Metro UI风格的Web桌面应用框架，现代的
+		、简约的、可定制的、全新的Web桌面。HteOS具有动态磁贴、磁贴拖拽、右键菜单、快捷键、侧边栏、消息栏、
+		分辨率自适应、磁贴动态排列、界面动画等组件、特性，拥有应用市场、即时通讯、图片新闻、日历、天气、股票、
+		音乐FM、搜索等功能，能够满足您对现代Web桌面的要求。">
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+		<!--[if lt IE 8]>
+            <script type="text/javascript">
+                window.location.href="unsupport_browser.html";
+            </script>
+        <![endif]-->
+        <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/preloader.css">
+		<link rel="stylesheet" href="css/index.css">
+
+	</head>
+
+	<body>
+		<!-- 预加载界面 -->
+		<div class="hte-preloader">
+			<div id="hte-preloader-panel" class="hte-preloader-panel">
+				<div class="hte-preloader-title">
+					<img alt="" src="images/logo.png" height="30px" style="margin-top:-10px;margin-right: 10px;">
+					<span class="segoe">HteOS</span> - <small>与众不同的 <span class="segoe">Web</span> </small>
+				</div>
+				<div class="hte-preloader-progress">
+					<img class="hte-preloader-icon" src="images/preloader_black_48.gif">
+					<span class="hte-preloader-text">正在加载样式与脚本...</span>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var panel = document.getElementById("hte-preloader-panel");
+			var marginTop = ((document.body.offsetHeight - panel.offsetHeight) / 2) - 100;
+			panel.style.marginTop = marginTop > 0 ? marginTop : 200;
+		</script>
+		<!-- 引入HteOS 公共 CSS文件 -->
+        <!--<script>loadCss("../build/css/"+theme+"/hteos.min.css");</script>-->
+		<link rel="stylesheet" href="lib/metroicon/css/metro.icon.css">
+		<link rel="stylesheet" href="lib/fontawesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/store.css">
+		<!--[if lt IE 9]>
+			<script src="lib/respond.min.js"></script>
+			<script src="lib/html5shiv.min.js"></script>
+		<![endif]-->
+		<!-- 引入JS文件 -->
+		<script src="lib/jquery-1.9.1.min.js"></script>
+		<script src="lib/jquery-ui.js"></script>
+		<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="http://localhost:63343/HteOS4/build/hteos.dev.js"></script>
+		<script src="lib/require.js"></script>
+        <script src="js/config/dev.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/controller/Profile.js"></script>
+        <script src="js/controller/Setting.js"></script>
+        <script src="js/controller/Store.js"></script>
+        <script src="js/controller/Clock.js"></script>
+        <script src="js/controller/Live.js"></script>
+        <script src="js/controller/Music.js"></script>
+        <script src="js/controller/News.js"></script>
+        <script src="js/controller/Photo.js"></script>
+        <script src="js/controller/Stock.js"></script>
+		<script src="js/controller/Weather.js"></script>
+		<script src="js/controller/Messages.js"></script>
+        <script src="js/controller/AppManager.js"></script>
+		<script src="js/controller/StoreDetail.js"></script>
+        <script src="js/storage/Remote.js"></script>
+        <link rel="shortcut icon" href="images/shortcut.png">
+		<script>
+
+			//eventer.on("hteos.afterstart", function() {
+				/*var welcom = "<p>感谢您关注HteOS，HteOS是一个全新的Web桌面应用开发框架！</p>" +
+					"<p>HteOS采用模块化开发模式，使用SASS进行CSS编译，能够快速的进行定制开发</p>" +
+					"<p>如果您对HteOS有问题或者提出宝贵的意见，联系QQ：340025873</p>";*/
+				//HteOS.Messager.alert("欢迎",welcom);
+			//});
+		</script>
+	</body>
+
+</html>

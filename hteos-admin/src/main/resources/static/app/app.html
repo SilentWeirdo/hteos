@@ -1,0 +1,180 @@
+<style type="text/css">
+    .btn-xs {
+        padding: 1px 5px;
+        font-size: 12px;
+        line-height: 1.5;
+        border-radius: 3px;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="hte-task-tile">应用管理</h2>
+    </div>
+    <div class="col-md-4 col-xs-12 col-sm-12" style="margin-top: 10px;">
+        <div class="input-group">
+            <input id="condition-input" type="text" class="form-control">
+            <span class="input-group-btn" placeholder="输入名称进行查询">
+				<button id="search-btn" class="btn btn-default" type="button">
+					<span class="glyphicon glyphicon-search"></span> 查询
+				</button>
+			</span>
+        </div>
+    </div>
+    <div class="col-md-6  col-xs-12 col-sm-12 pull-right" style="text-align: right;margin-top: 10px;">
+        <button id="btn-create" type="button" class="btn btn-success">
+            <span class="glyphicon glyphicon-plus"></span> 创建
+        </button>
+        <button id="btn-edit" type="button" class="btn btn-primary">
+            <span class="glyphicon glyphicon-edit"></span> 修改
+        </button>
+        <button id="btn-delete" type="button" class="btn btn-danger">
+            <span class="glyphicon glyphicon-trash"></span> 删除
+        </button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <p style="margin-top: 10px;" id="pageResult-total"></p>
+    </div>
+    <div class="col-md-12">
+        <div class="app-container"></div>
+    </div>
+    <div class="col-md-12">
+        <button id="load-more-btn" class="btn btn-default"
+                style="margin-top: 30px; width: 100%;display: none;">加载更多
+        </button>
+    </div>
+</div>
+<script type="text/javascript">
+    var size = 20;
+    var page = 0;
+    var pros = ["id", "bgcolor", "color", "name", "size"];
+    var tpl = template.compile("<%for(i = 0; i < content.length; i ++) {%>" +
+        "<%var app = content[i];%>" +
+        "<div id=\"<%=app.id%>\" class=\"tile tile-mini\" style=\"background-color:<%=app.tile.bgcolor%>;color:<%=app.tile.color%>;\">"
+        + "<div class=\"tile-icon\">"
+        + "<img src=\"<%=app.icon%>\">"
+        + "</div>"
+        + "<div class=\"tile-name\"><%=app.name%></div>"
+        + "</div>" +
+        "<%}%>");
+
+    function load(condition, clear) {
+        $("#pageResult-total").html("正在加载请稍候...");
+        var xhr = $.ajax({
+            url: "/app/search",
+            dataType: "json",
+            method: "POST",
+            data: {
+                condition: condition || "",
+                size: size,
+                page: page
+            }
+        });
+        xhr.done(function (data) {
+            var html = clear ? "" : $(".app-container").html();
+            html += tpl(data);
+
+            $(".app-container").html(html);
+            if (size * (page + 1) >= data.totalElements) {
+                $("#load-more-btn").hide();
+            } else {
+                $("#load-more-btn").show();
+            }
+            $("#pageResult-total").html("找到相关应用" + data.totalElements + "个");
+        });
+
+        xhr.fail(function () {
+            $("#pageResult-total").html("查询错误，请稍候再试");
+        });
+    }
+
+    $("#load-more-btn").click(function () {
+        page += 1;
+        load();
+    });
+
+    $("#search-btn").click(function () {
+        if ($("#condition-input").val()) {
+            page = 0;
+            load($("#condition-input").val(), true);
+        } else {
+            page = 0;
+            load(null, true);
+        }
+    });
+    $(document).off("click.hteos.tile", ".tile");
+    $(document).on("click.hteos.tile", ".tile", function (event) {
+        var tile = $(this);
+        if (event.ctrlKey) {
+            $(this).toggleClass("selected");
+        } else {
+            if (tile.hasClass("selected")) {
+                $(".tile").removeClass("selected");
+            } else {
+                $(".tile").removeClass("selected");
+                tile.addClass("selected");
+            }
+
+        }
+    });
+
+
+    $("#btn-delete").click(
+        function () {
+            if ($(".tile.selected").length <= 0) {
+                $.messager.alert("HteOS提示", "选择要删除的应用");
+                return;
+            }
+
+            $.messager.confirm("HteOS提示", "确定要删除?", function (btn) {
+                if (btn == "yes") {
+                    var ids = "";
+                    $(".tile.selected").each(function () {
+                        ids += $(this).attr("id");
+                    });
+                    var xhr = $.ajax({
+                        url: "/app/delete",
+                        dataType: "json",
+                        method: "POST",
+                        data: {
+                            ids: ids
+                        }
+                    });
+                    xhr.done(function (data) {
+                        if (data.success) {
+                            $.messager.alert("HteOS提示", "删除成功");
+                            load(null, true);
+                        } else {
+                            $.messager.alert("HteOS提示", "删除失败:"
+                                + data.message);
+                        }
+                    });
+                    xhr.fail(function () {
+                        $.messager.alert("HteOS提示",
+                            "发生未知错误，删除失败,请稍候再试");
+
+                    });
+                }
+            });
+        });
+    $("#btn-create").click(function () {
+        Index.Nav.load("app/app-detail.html");
+    });
+
+    $("#btn-edit")
+        .click(
+            function () {
+                var tiles = $(".tile.selected");
+                if (tiles.length == 1) {
+                    window.currentApp = tiles.attr("id");
+                    Index.Nav.load("/app/app-detail.html");
+                } else if (tiles.length > 1) {
+                    $.messager.alert("HteOS提示", "只允许选择一个应用进行修改");
+                } else {
+                    $.messager.alert("HteOS提示", "选择要修改的应用");
+                }
+            });
+
+    load();
+</script>

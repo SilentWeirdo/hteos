@@ -1,0 +1,76 @@
+<html lang="zh_cn">
+
+	<head>
+		<title>HteOS - Web桌面应用框架 - 演示站点</title>
+		<meta chartset="utf-8">
+		<meta http-equiv="Pragma" content="no-cache">		
+		<meta http-equiv="Cache-Control" content="no-store,must-revalidate">
+		<meta http-equiv="expires" content="0"/>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<meta content="IE=edge" http-equiv="X-UA-Compatible">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+		<meta name="keywords" content="HteOS,webos,WebDesktop,Web桌面,HTML5,Win8Web,Win8MetroWeb,web桌面,webdesk,webdesktop,云桌面,web云桌面，定制化桌面">
+		<meta name="description" content="HteOS - 演示站点，HteOS(www.hteos.com)是一款Win8 Metro UI风格的Web桌面应用框架，现代的
+	、简约的、可定制的、全新的Web桌面。HteOS具有动态磁贴、磁贴拖拽、右键菜单、快捷键、侧边栏、消息栏、
+	分辨率自适 应、磁贴动态排列、界面动画等组件、特性，拥有应用市场、即时通讯、图片新闻、日历、天气、股票、
+	音乐FM、搜索等功能，能够满足您对现代Web桌面的要求。">
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+        <!-- 引入Bootstrap CSS 文件 -->
+		<link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+		<!-- 引入HteOS 桌面 CSS 文件 -->
+		<link rel="stylesheet" href="css/app.min.css">
+        <link rel="shortcut icon" href="images/shortcut.png">
+		<!--[if lt IE 8]>
+		<script type="text/javascript">
+			window.location.href="unsupport_browser.html";
+		</script>
+	<![endif]-->
+	</head>
+
+	<body>
+		<!-- 预加载界面 -->
+		<div class="hte-preloader">
+			<div id="hte-preloader-panel" class="hte-preloader-panel">
+				<div class="hte-preloader-title">
+					<img alt="" src="images/logo.png" height="30px" style="margin-top:-10px;margin-right: 10px;">
+					<span class="segoe">HteOS</span> - <small>与众不同的 <span class="segoe">Web</span> </small>
+				</div>
+				<div class="hte-preloader-progress">
+					<img class="hte-preloader-icon" src="images/preloader_black_48.gif">
+					<span class="hte-preloader-text">正在加载样式与脚本...</span>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+            var panel = document.getElementById("hte-preloader-panel");
+            var marginTop = ((document.body.offsetHeight - panel.offsetHeight) / 2) - 100;
+            panel.style.marginTop = marginTop > 0 ? marginTop : 200;
+		</script>
+		<!-- 引入HteOS 公共 CSS文件 -->
+		<link rel="stylesheet" href="http://asset.hteos.com/metroicon/1.0/css/metro.icon.css">
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<!--[if lt IE 9]>
+			<script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+			<script src="https://cdn.bootcss.com/html5shiv/3.7.1/html5shiv.min.js"></script>
+		<![endif]-->
+		<!-- 引入JS文件 -->
+		<script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+		<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="http://asset.hteos.com/jquery-ui.js"></script>
+		<script src="http://asset.hteos.com/hteos/4.0/hteos.dist.min.js"></script>
+        <script src="js/app.min.js"></script>
+		<!--网站统计-->
+        <div style="display: none">
+            <script>
+                var _hmt = _hmt || [];
+                (function() {
+                    var hm = document.createElement("script");
+                    hm.src = "https://hm.baidu.com/hm.js?a35e62208916ceae21494129dd28eb69";
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(hm, s);
+                })();
+            </script>
+        </div>
+	</body>
+
+</html>

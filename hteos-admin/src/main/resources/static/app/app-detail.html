@@ -1,0 +1,519 @@
+<form role="form" id="app_create_form">
+    <input type="hidden" name="id">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="dashboard-viewport-tile">
+                <span id="return-btn" class="metro-icon-arrow-left-3 dashboard-nav-icon"></span> 编辑
+            </h2>
+        </div>
+        <div class="col-md-6">
+            <h4 style="margin-bottom: 20px;border-bottom: 1px solid #ccc;padding-bottom: 10px;">
+                应用信息</h4>
+            <ul class="nav nav-tabs" style="margin-bottom: 10px;">
+                <li class="active"><a href="#info" data-toggle="tab">基本信息</a></li>
+                <li><a href="#ui-panel" data-toggle="tab">样式设计</a></li>
+                <li><a href="#desc" data-toggle="tab">详细信息</a></li>
+                <!-- <li class="dropdown"><a href="#preview" data-toggle="tab">预览图片</a>
+                </li> -->
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade active in" id="info">
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="appName">应用名称</label>
+                            <input type="text" class="form-control" id="appName" name="name" placeholder="应用名称，不超过10个汉字" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="code">应用代码</label>
+                            <input type="text" class="form-control" id="code" name="code" placeholder="应用代码">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label>默认应用</label>
+                            <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+                                <label class="btn btn-success col-md-6">
+                                    <input type="radio"  name="isDefault" value="true">
+                                    <span class="glyphicon glyphicon-ok"></span> 是
+                                </label>
+                                <label class="btn btn-success  col-md-6">
+                                    <input type="radio" name="isDefault" value="false">
+                                    <span class="glyphicon glyphicon-remove"></span> 否
+                            </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>系统应用</label>
+                            <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+                                <label class="btn btn-success col-md-6">
+                                    <input type="radio"  name="isNative" value="true">
+                                    <span class="glyphicon glyphicon-ok"></span> 是
+                                </label>
+                                <label class="btn btn-success  col-md-6">
+                                    <input type="radio" name="isNative" value="2">
+                                    <span class="glyphicon glyphicon-remove"></span> 否
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="category">应用分类</label>
+                            <select class="form-control" id="category" name="category">
+                                <option value="2">社交</option>
+                            <option value="3">游戏</option>
+                            <option value="4">娱乐</option>
+                            <option value="5">视频</option>
+                            <option value="6">音乐</option>
+                            <option value="7">办公</option>
+                            <option value="8">工具</option>
+                            <option value="9">其他</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="appVersion">应用版本</label>
+                            <input type="text"  class="form-control" id="appVersion" name="appVersion" placeholder="应用版本，不超过10个汉字" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade " id="ui-panel">
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="ui">磁贴样式</label>
+                            <select class="form-control" id="ui" name="tile.ui">
+                                <option value="1" selected>中间显示图标 左下角显示名称</option>
+                                <option value="2">中间显示图片 左下角显示名称</option>
+                                <option value="3">中间显示图片 左下角显示图标</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label>应用尺寸</label>
+                            <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+                                <label class="btn btn-success col-md-4">
+                                    <input type="radio" name="tile.size" value="large">大
+                                </label>
+                                <label class="btn btn-success col-md-4">
+                                    <input type="radio" name="tile.size" value="default">中
+                                </label>
+                                <label class="btn btn-success col-md-4">
+                                    <input type="radio" name="tile.size" value="mini">小
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label>文字颜色</label>
+                            <div id="color" class="input-group colorpicker-component">
+                                <input type="text" name="tile.color" class="form-control" value="rgb(255, 255, 255)"/>
+                                <span class="input-group-addon"><i></i></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>背景颜色</label>
+                            <div id="bgcolor" class="input-group colorpicker-component">
+                                <input type="text" name="tile.bgcolor" class="form-control"
+                                       value="rgba(31, 83, 160,1)"/>
+                                <span class="input-group-addon"><i></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <input type="hidden" name="icon">
+                            <input type="file" style="display: none" id="iconFileInput"/> <label
+                                style="width: 100%">应用图标</label>
+                            <div class="app-icon-wrapper">
+                                <img alt="" src="">
+                            </div>
+                            <p style="margin-top: 5px;">
+                                <small>JPG,PNG,GIF格式，小于1M，推荐规格64*64</small>
+                            </p>
+                            <button id="iconBtn" type="button" class="btn btn-default">
+                                选择图标
+                            </button>
+                            <p id="icon-error"
+                               style="margin-top: 5px;color:red;display: none;"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="hidden" name="image"> <input type="file"
+                                                                      style="display: none" id="imageFileInput"/>
+                            <label>背景图片</label>
+                            <div class="app-image-wrapper">
+                                <img alt="" src="">
+                            </div>
+                            <p style="margin-top: 5px;">
+                                <small>JPG,PNG,GIF格式，小于2M，推荐规格277*134</small>
+                            </p>
+                            <button id="imageBtn" type="button" class="btn btn-default">
+                                选择图片
+                            </button>
+                            <p id="image-error"
+                               style="margin-top: 5px;color:red;display: none;"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade in" id="desc">
+                    <div class="form-group">
+                        <label for="subject">应用概述</label>
+                        <textarea class="form-control" id="subject" name="subject"
+                                  style="height: 50px;" placeholder="应用详细信息，不超过100个汉字 "></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="appDesc">详细信息</label>
+                        <textarea class="form-control" id="appDesc" name="desc"
+                                  style="height: 200px;" placeholder="应用详细信息，不超过300个汉字 "></textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <h4
+                    style="margin-bottom: 20px;
+				border-bottom: 1px solid #ccc;
+				padding-bottom: 10px;">高级属性</h4>
+            <div>
+                <ul class="nav nav-tabs" style="margin-bottom: 10px;">
+                    <li class="active"><a href="#event" data-toggle="tab">事件处理</a></li>
+                    <li><a href="#window" data-toggle="tab">窗口设置</a></li>
+                    <li><a href="#tile" data-toggle="tab">动态磁贴</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade" id="tile">
+                        <div class="form-group">
+                            <label for="dataUrl">控制器</label>
+                            <input type="text" class="form-control" id="controller" name="tile.controller"
+                                   placeholder="动态磁贴控制器JS类">
+                        </div>
+                        <div class="form-group">
+                            <label for="dataUrl">数据URL</label>
+                            <input type="text" class="form-control" id="dataUrl" name="tile.dataUrl"
+                                   placeholder="加载数据的数据渲染模板">
+                        </div>
+                        <div class="form-group">
+                            <label for="templateUrl">模板地址</label>
+                            <input type="templateUrl" class="form-control" id="templateUrl" name="tile.templateUrl"
+                                   placeholder="加载远程模板渲染">
+                        </div>
+                        <div class="form-group">
+                            <label for="tpl">模板内容</label>
+                            <textarea class="form-control" id="tpl" name="tile.template"
+                                      style="height: 100px;" placeholder="通过模板渲染"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade " id="window">
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label>运行模式</label>
+                                <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+                                    <label class="btn btn-success  col-md-6">
+                                        <input type="radio" name="task.shell" value="window"> 窗口
+                                    </label>
+                                    <label class="btn btn-success col-md-6">
+                                        <input type="radio" name="task.shell" value="dock"> 侧边栏
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>默认最大化</label>
+                                <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+                                    <label class="btn btn-success  col-md-6">
+                                        <input type="radio" name="task.maximized" value="true"> 是
+                                    </label>
+                                    <label class="btn btn-success  col-md-6">
+                                        <input type="radio" name="task.maximized" value="false"> 否
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label>可最大化</label>
+                                <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+                                    <label class="btn btn-success  col-md-6">
+                                        <input type="radio" name="task.maximizable" value="true"> 是
+                                    </label>
+                                    <label class="btn btn-success col-md-6">
+                                        <input type="radio" name="task.maximizable" value="false"> 否
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>可变尺寸</label>
+                                <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+                                    <label class="btn btn-success  col-md-6">
+                                        <input type="radio" name="task.resizable" value="true"> 是
+                                    </label>
+                                    <label class="btn btn-success col-md-6">
+                                        <input type="radio" name="task.resizable" value="false"> 否
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="width">初始长度</label>
+                                <input type="text" class="form-control" id="width" name="task.width"
+                                       placeholder="窗口的初始宽度">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="width">初始高度</label>
+                                <input type="text" class="form-control" id="height" name="task.height"
+                                       placeholder="窗口初始高度">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label>初始位置</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="task.top" name="task.top"
+                                       placeholder="上">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="task.bottom" name="task.bottom"
+                                       placeholder="下">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="task.left" name="task.left"
+                                       placeholder="左">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="task.right" name="task.right"
+                                       placeholder="右">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dataUrl">控制器</label>
+                            <input type="text" class="form-control" id="task.controller" name="task.controller" placeholder="任务控制器">
+                        </div>
+                        <div class="form-group">
+                            <label for="templateUrl">模板地址</label>
+                            <input type="templateUrl" class="form-control" id="task.templateUrl"
+                                   name="task.templateUrl" placeholder="模板地址">
+                        </div>
+                        <div class="form-group">
+                            <label for="tpl">模板内容</label>
+                            <textarea class="form-control" id="task.template" name="task.template"
+                                      style="height: 100px;" placeholder="任务模板"></textarea>
+                        </div>
+                        <div class="alert alert-info" role="alert">
+                            如果点击事件为“执行脚本”则无需设置该选项卡的内容，如果选择的“侧边栏”模式，则无需设置下面的的属性
+                        </div>
+                    </div>
+                    <div class="tab-pane fade active in " id="event">
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="appName">事件响应</label>
+                                <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+                                    <label class="btn btn-success  col-md-4">
+                                        <input type="radio" name="task.type" value="task"> 打开应用
+                                    </label>
+                                    <label class="btn btn-success col-md-4">
+                                        <input type="radio" name="task.type" value="script"> 执行脚本
+                                    </label>
+                                    <label class="btn btn-success col-md-4">
+                                        <input type="radio" name="task.type" value="none"> 不执行
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="task.script">脚本</label>
+                            <textarea name="task.script" class="form-control" id="task.script" style="height: 150px;" placeholder="点击磁贴执行的脚本"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="pull-right dashboard-footer">
+                <button id="cancelButton" type="button" class="btn btn-danger" data-dismiss="viewport">
+                    <span class="glyphicon glyphicon-remove"></span> 取消
+                </button>
+                <button id="saveButton" type="submit" data-loading-text="正在保存..."
+                        class="btn btn-success">
+                    <span class="glyphicon glyphicon-floppy-disk"></span> 保存
+                </button>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        $('#color').colorpicker();
+        $('#bgcolor').colorpicker()
+
+        $("#iconBtn").click(function () {
+            $("#iconFileInput").click();
+        });
+
+        $("#iconFileInput").change(function () {
+                window.appIcon = this.files[0];
+                if (appIcon.type != "image/png" && appIcon.type != "image/gif" && appIcon.type != "image/jpeg") {
+                    $("#icon-error").html("请选择图片文件");
+                    $("#icon-error").show();
+                } else if (appIcon.size > 1024 * 1024) {
+                    $("#icon-error").html("图片文件太大");
+                    $("#icon-error").show();
+                } else {
+                    $("#icon-error").hide();
+                    window.uploadIcon = true;
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        $(".app-icon-wrapper > img").attr("src",
+                            this.result);
+                    }
+                    reader.readAsDataURL(appIcon);
+                }
+            });
+
+        $("#imageBtn").click(function () {
+            $("#imageFileInput").click();
+        });
+
+        $("#imageFileInput").change(function () {
+                window.appImage = this.files[0];
+                if (appImage.type != "image/png" && appImage.type != "image/gif" && appImage.type != "image/jpeg") {
+                    $("#image-error").html("请选择图片文件");
+                    $("#image-error").show();
+                } else if (appImage.size > 1024 * 1024) {
+                    $("#image-error").html("图片文件太大");
+                    $("#image-error").show();
+                } else {
+                    $("#image-error").hide();
+                    window.uploadImage = true;
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        $(".app-image-wrapper > img").attr("src", this.result);
+                    }
+                    reader.readAsDataURL(appImage);
+                }
+            });
+
+        if (window.currentApp) {
+            var xhr = $.ajax({
+                url: "/app/get",
+                data: {
+                    id: window.currentApp
+                },
+                dataType: "json"
+            });
+            xhr.done(function (data) {
+                for (var pro in data) {
+                    var value = data[pro];
+                    if (value == '[object Object]') {
+                        for (var subPro in value) {
+                            setValue(pro + "." + subPro, value[subPro]);
+                        }
+                    } else {
+                        setValue(pro, value);
+                    }
+                }
+
+                function setValue(name, value) {
+                    var input = $("[name='" + name + "']");
+                    if (input.attr("type") != "radio") {
+                        input.val(value);
+                    }
+                }
+
+                $("#color").colorpicker("setValue", data.tile.color);
+                $("#bgcolor").colorpicker("setValue", data.tile.bgcolor);
+
+                var radios = ["tile.size", "isDefault", "isNative",
+                    "task.type",
+                    "task.maximizable", "task.resizable",
+                    "task.shell", "task.maximized"];
+
+                for (var i = 0; i < radios.length; i++) {
+                    var name = radios[i];
+                    $("[name='" + name + "']").each(function () {
+                        var radio = $(this);
+                        if (radio.val() == "" + getValue(name)) {
+                            radio.attr("checked", "checked");
+                            radio.parent().addClass("active");
+                        }
+                    });
+                }
+
+                function getValue(names) {
+                    var value = data;
+                    names.split(".").forEach(function (name) {
+                        value = value[name];
+                    });
+                    return value;
+                }
+
+                $(".app-icon-wrapper > img").attr("src", data.icon);
+                $(".app-image-wrapper > img").attr("src", data.image);
+            });
+        }
+
+        function upload(id) {
+            var button = $("#saveButton");
+            button.html("正在上传图片...");
+            button.attr("disabled", "disabled");
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    Index.Nav.load("app/app.html");
+                    window.appIcon = null;
+                    window.appImage = null;
+                }
+            }
+            xhr.open("POST", "/app/upload", true);
+            var fd = new FormData();
+            fd.append("id", id);
+            if (window.uploadIcon) {
+                fd.append("icon", window.appIcon);
+            }
+            if (window.uploadImage) {
+                fd.append("image", window.appImage);
+            }
+            xhr.send(fd);
+        }
+
+        $("#return-btn").click(function () {
+            Index.Nav.load("/app/app.html");
+        });
+
+        $("#cancelButton").click(function () {
+            Index.Nav.load("/app/app.html");
+        });
+
+
+        $("#app_create_form").submit(function () {
+            var button = $("#saveButton");
+            button.html("正在保存...");
+            button.attr("disabled", "disabled");
+            var params = $(this).serialize();
+            var xhr = $.ajax({
+                url: "/app/save",
+                method: "POST",
+                data: params,
+                dataType: "json"
+            });
+            xhr.done(function (data) {
+                if (data.success && !window.uploadIcon && !window.uploadImage) {
+                    Index.Nav.load("app/app.html");
+                } else if (window.uploadIcon || window.uploadImage) {
+                    upload(data.message);
+                } else {
+                    $(".fail-result").html("保存失败:" + data.message);
+                    $(".fail-result").show();
+                }
+            });
+            xhr.fail(function (data) {
+                button.removeAttr("disabled");
+                $(".fail-result").html("发生未知错误，请稍候再试");
+                $(".fail-result").show();
+            });
+            return false;
+        });
+    </script>
+</form>
+

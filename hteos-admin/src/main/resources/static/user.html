@@ -1,0 +1,288 @@
+<div class="user-container">
+<div class="row">
+	<div class="col-md-12">
+		<h2 class="hte-task-tile">用户管理</h2>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4 col-xs-12 col-sm-12"  style="margin-bottom: 10px;">
+		<div class="input-group">
+			<input id="user-condition-input" type="text" class="form-control"
+				placeholder="输入名称进行查询"> <span class="input-group-btn">
+				<button id="user-search-btn" class="btn btn-default"
+					type="button">
+					<span class="glyphicon glyphicon-search"></span> 查询
+				</button>
+			</span>
+		</div>
+	</div>
+	<!-- <div class="col-md-6 col-xs-12 col-sm-12 user-action" style="margin-bottom: 10px;">
+		<button id="btn-set-wallpaper" type="button" class="btn btn-primary">
+			<span class="glyphicon glyphicon-download-alt"></span> 安装系统应用
+		</button>
+		 <button id="btn-install-app" type="button" class="btn btn-primary">
+			<span class="glyphicon glyphicon-envelope"></span> 发送邮件
+		</button>
+		<button id="btn-set-face" type="button" class="btn btn-success">
+			<span class="glyphicon glyphicon-plus"></span> 设置默认头像
+		</button> 
+	</div> -->
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<div class="table-responsive">
+			<table class="data-table table table-bordered" style="font-size: 14px;">
+				<thead>
+					<tr>
+						<th style="text-align: center;vertical-align: middle;"><input
+							type="checkbox" class="form_control select_checkbox"></th>
+						<th>头像</th>
+						<th>邮箱</th>
+						<th>昵称</th>
+						<th>地区</th>
+						<th>参数设置</th>
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<table style="display: none;">
+		<tr id="data_row_tpl">
+			<td style="text-align: center;vertical-align: middle;"><input
+				type="checkbox" class="form_control"></td>
+			<td><img src="{face}" style="max-height: 48px;"></td>
+			<td>{email}</td>
+			<td>{nickName}</td>
+			<td>{residence}</td>
+			<td><a href="javascript:void(0)" onclick="setLink('{id}')">设置参数</a></td>
+		</tr>
+	</table>
+</div>
+<div class="row">
+	<div class="col-md-6" style="padding-top:20px">
+		<span class="total"></span>条数据
+	</div>
+	<div class="col-md-6">
+		<ul class="pagination pull-right">
+			<li class="pagination-prev"><a href="#">&laquo;</a></li>
+			<li class="pagination-next"><a href="#">&raquo;</a></li>
+		</ul>
+	</div>
+</div>
+</div>
+<script type="text/javascript">
+
+
+	function setLink(id){
+		Index.Nav
+		.load("/dashboard/link/link_set.jsp?accountId=" + id);
+	}
+
+
+	(function() {
+		var param = {
+			page : 1,
+			size : 20
+		};
+
+		$(".pagination-prev").click(function(){
+			param.page = 1;
+			search();
+		});
+
+		$(".pagination-next").click(function(){
+			param.page = pages;
+			search();
+		});
+		
+		$("#btn-install-app").click(function(){
+			$(document.body).mask("正在发送");
+			$.ajax({
+				url : "/support/recommend",
+				success : function(data) {
+					if (data.success) {
+						$.messager.alert("安装成功",data.message);
+					} else {
+						$.messager.alert("安装失败");
+					}
+				},
+				complete : function() {
+					$(document.body).unmask();
+				}
+			});
+		});
+
+		$("#btn-set-wallpaper").click(function() {
+			var records = getSelected(), ids = "";
+			for (var i = 0; i < records.length; i++) {
+				if (ids.length > 0) {
+					ids += ",";
+				}
+				ids += records[i].id;
+			}
+			$(document.body).mask("正在安装");
+			$.ajax({
+				url : "/user/install/default/app",
+				data : {
+					ids : ids || "1"
+				},
+				success : function(data) {
+					if (data.success) {
+						$.messager.alert("安装成功");
+					} else {
+						$.messager.alert("安装失败");
+					}
+				},
+				complete : function() {
+					$(document.body).unmask();
+				}
+			})
+		});
+
+		var records = {};
+		$(document.body).off("click", ".user-container .pagination-page > a");
+		$(document.body).on("click", ".user-container .pagination-page > a", function(event) {
+			param.page = $(this).text();
+			search();
+			event.preventDefault();
+		});
+
+		$(".select_checkbox").change(
+				function() {
+					var checked = $(this).is(":checked");
+					if (checked === true) {
+						$(".user-container .data-table > tbody").find("input:checkbox").each(
+								function() {
+									if ($(this).is(":checked") === false) {
+										$(this).click();
+									}
+								});
+					} else {
+						console.log("没选中");
+						$(".user-container .data-table > tbody").find("input:checkbox").attr(
+								"checked", false);
+					}
+				});
+		$("#user-search-btn").click(function() {
+			param.key = $("#user-condition-input").val();
+			param.page = 1;
+			search();
+		});
+
+		function search() {
+			$(document.body).mask("正在加载...");
+			console.log('执行查询');
+			$.ajax({
+				url : "/user/list",
+				data : param,
+				success : function(data) {
+					var total = data.total;
+					$(".data-row").remove();
+					pagination(total);
+					render(data.content);
+				},
+				error : function() {
+
+				},
+				complete : function() {
+					$(document.body).unmask();
+				}
+			});
+		}
+		
+		String.prototype.format = function(data){
+			var s = this;
+			Object.keys(data).forEach(function(key){
+				var placeholder = "{" + key + "}";
+				while(s.indexOf(placeholder) >= 0){
+					s = s.replace(placeholder,data[key]);
+				}
+			});
+			return s;
+		}
+
+		function render(rows) {
+			var tpl = $("#data_row_tpl");
+			for (var i = 0; i < rows.length; i++) {
+				var data = rows[i];
+				var row = tpl.clone();
+				var html = row.html();
+				var face = (data.face ? (data.face.indexOf("http") >= 0 ? data.face : data.face )
+						: "/images/face.png");
+				/* html = html.replace("{face}", faceHTML).replace("{email}",
+						data.email).replace("{nickName}", data.nickName)
+						.replace("{gender}", data.gender).replace(
+								"{residence}", data.residence).replace(
+								"{lastLoginDate}",
+								new Date(data.lastLoginDate).format()); */
+				html = html.format(data);
+				row.html(html);
+				row.show();
+				row.attr("id", "reocrd-" + data.id);
+				row.data("record", data.id);
+				row.addClass("data-row");
+				records[data.id] = data;
+				$(".data-table > tbody").append(row);
+			}
+		}
+
+		function pagination(total) {
+			$(".user-container .pagination-page").remove();
+			$(".user-container .pagination > .active").remove();
+			$(".user-container .total").html(total);
+			var pages = Math.ceil(total / param.size);
+			window.pages = pages;
+			var current = parseInt(param.page);
+			paginations = [];
+			if(pages <= 5){
+				for (var i = 1; i <= pages; i++) {
+					paginations.push(i);
+				}
+				paginations.reverse();
+			}else if(pages - current <= 2){
+				for (var i = pages; i >= pages - 4; i--) {
+					paginations.push(i);
+				}
+			}else{
+				if(current > 2){
+					paginations.push(current - 2);
+					paginations.push(current - 1);
+					paginations.push(current);
+					paginations.push(parseInt(current + 1));
+					paginations.push(parseInt(current + 2));
+					paginations.reverse();
+				}else{
+					for (var i = 1; i <= (pages > 5 ? 5 : pages); i++) {
+						paginations.push(i);
+					}
+					paginations.reverse();
+				}
+			}
+			var pre = $(".user-container .pagination-prev");
+			for (var i = 0; i < paginations.length; i++) {
+				var pagination = $("<li class=\"pagination-page\"><a href=\"#\">"
+						+ paginations[i] + "</a></li>");
+				if (paginations[i] == current) {
+					pagination.addClass("active");
+					pagination.removeClass("pagination-page");
+				}
+				pagination.insertAfter(pre)
+			}
+		}
+		search();
+
+		function getSelected() {
+			var selected = [];
+			$(".user-container .data-table > tbody").find("input:checkbox").each(function() {
+				var row = $(this).parents("tr");
+				if ($(this).is(":checked") === true) {
+					selected.push(records[row.data("record")]);
+				}
+			});
+			return selected;
+		}
+	})();
+</script>

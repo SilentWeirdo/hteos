@@ -1,0 +1,52 @@
+@font-face {
+    font-family: 'Segoe Script';
+    src: url('../fonts/segoe_script-webfont.eot');
+         format('embedded-opentype'), url('../fonts/segoe_script-webfont.svg#segoe_scriptregular')
+         format('svg'), url('../fonts/segoe_script-webfont.woff')
+         format('woff'),url('../fonts/segoe_script-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.segoe {
+    font-family: Segoe Script;
+}
+
+.hte-preloader {
+    position: absolute;
+    z-index: 99999;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    color: #333;
+}
+
+.hte-preloader-icon {
+    height: 25px;
+    width: 25px;
+    margin-top: -4px;
+}
+
+.hte-preloader-progress {
+    position: relative;
+    margin-top: 35px;
+    text-align: center;
+}
+
+.hte-preloader-panel {
+    width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 200px;
+}
+
+.hte-preloader-title {
+    font-size: 20pt;
+}
+
+.hte-preloader-text {
+    font-size: 15px;
+    padding-left: 5px;
+}

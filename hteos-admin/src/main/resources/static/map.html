@@ -1,0 +1,420 @@
+<div class="access-container">
+	<div class="row">
+		<div class="col-md-12">
+			<h2 class="hte-task-tile"  style="margin-bottom: 10px;">报表</h2>
+		</div>
+	</div>
+	<div class="row" >
+		<div class="col-md-6 col-xs-12 col-sm-12" style="margin: 10px 0px;">
+			<div class="btn-group time-group" data-toggle="buttons" >
+				<label class="btn btn-default active" id="stat-today"> 
+					<input type="radio" name="range" value="1" checked="checked"> 近一个月
+				</label> 
+				<label class="btn btn-default " id="stat-7"> 
+					<input type="radio" name="range" value="3" >最近3个月
+				</label>
+				<label class="btn btn-default "  id="stat-30"> 
+					<input type="radio" name="range"  value="4">最近半年
+				</label>
+				<!-- <label class="btn btn-default " id="stat-custom"> 
+					<input type="radio" name="range"  value="5" >自定义
+				</label> -->
+			</div>
+		</div>
+		<div class="col-md-6 col-xs-12 col-sm-12" >
+			<form class="form-inline condition-form">
+				<div class="form-group ">
+					<input id="start-date" type="date" class="form-control"
+						placeholder="开始日期" > 
+				</div>
+				<div class="form-group ">
+					<input id="end-date" type="date" class="form-control"
+						placeholder="结束日期" > 
+				</div>
+				<button id="date-search-btn" class="btn btn-default" type="button">
+					<span class="glyphicon glyphicon-search"></span> 查询
+				</button>
+			</form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div id="accessMap" style="width:100%;height:400px;"></div>
+		</div>
+		<div class="col-md-6">
+			<div id="deviceMap" style="width:100%;height:400px;"></div>
+		</div>
+		<div class="col-md-6">
+			<div id="osMap" style="width:100%;height:400px;"></div>
+		</div>
+		<div class="col-md-6">
+			<div id="browserMap" style="width:100%;height:400px;"></div>
+		</div>
+	</div>
+	<div id="browserVersionModal" class="modal fade" style="margin-top: 50px">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title">浏览器版本</h4>
+	      </div>
+	      <div class="modal-body">
+					<div id="browserVersionMap" style="height:400px;"></div>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div>
+</div>
+<script type="text/javascript">
+	(function() {
+		
+		// 基于准备好的dom，初始化echarts实例
+        var accessMap = echarts.init(document.getElementById('accessMap'),'shine');
+
+        var option = {
+            tooltip: {
+                trigger: 'item'
+            },
+            title : {
+            	text : '访客地图',
+            	left : 'center'
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data:['访问人数','流量']
+            },
+            visualMap: {
+                min: 0,
+                max: 1000,
+                left: 'left',
+                top: 'bottom',
+                text: ['高','低'],           // 文本，默认为数值文本
+                calculable: true
+            },
+            toolbox: {
+                show: true,
+                orient: 'vertical',
+                left: 'right',
+                top: 'center',
+                feature: {
+                    dataView: {readOnly: false},
+                    restore: {},
+                    saveAsImage: {}
+                }
+            }
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        accessMap.setOption(option);
+
+        // 基于准备好的dom，初始化echarts实例
+        var deviceMap = echarts.init(document.getElementById('deviceMap'),'shine');
+
+        var option = {
+       		title : {
+       	        text: '访问设备',
+       	        x:'center'
+       	    },
+       	    tooltip : {
+       	        trigger: 'item',
+       	        formatter: "{a} <br/>{b} : {c} ({d}%)"
+       	    },
+            toolbox: {
+                show: true,
+                orient: 'vertical',
+                left: 'right',
+                top: 'center',
+                feature: {
+                    dataView: {readOnly: false},
+                    restore: {},
+                    saveAsImage: {}
+                }
+            }
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        deviceMap.setOption(option);
+        
+     // 基于准备好的dom，初始化echarts实例
+        var osMap = echarts.init(document.getElementById('osMap'),'shine');
+
+        var option = {
+       		title : {
+       	        text: '操作系统',
+       	        x:'center'
+       	    },
+       	    tooltip : {
+       	        trigger: 'item',
+       	        formatter: "{a} <br/>{b} : {c} ({d}%)"
+       	    },
+            toolbox: {
+                show: true,
+                orient: 'vertical',
+                left: 'right',
+                top: 'center',
+                feature: {
+                    dataView: {readOnly: false},
+                    restore: {},
+                    saveAsImage: {}
+                }
+            }
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        osMap.setOption(option);
+		
+        // 基于准备好的dom，初始化echarts实例
+        var browserMap = echarts.init(document.getElementById('browserMap'),'shine');
+
+        var option = {
+       		title : {
+       	        text: '浏览器',
+       	        x:'center'
+       	    },
+       	    tooltip : {
+       	        trigger: 'item',
+       	        formatter: "{a} <br/>{b} : {c} ({d}%)"
+       	    },
+            toolbox: {
+                show: true,
+                orient: 'vertical',
+                left: 'right',
+                top: 'center',
+                feature: {
+                    dataView: {readOnly: false},
+                    restore: {},
+                    saveAsImage: {}
+                }
+            }
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        browserMap.setOption(option);
+        browserMap.on("click",function(params){
+        	showBrowserVersion(params.name);
+        });
+        
+        
+        var browserVersionMap = echarts.init(document.getElementById('browserVersionMap'),'shine');
+        var option = {
+       	    tooltip : {
+       	        trigger: 'item',
+       	        formatter: "{a} <br/>{b} : {c} ({d}%)"
+       	    },
+            toolbox: {
+                show: true,
+                orient: 'vertical',
+                left: 'right',
+                top: 'center',
+                feature: {
+                    dataView: {readOnly: false},
+                    restore: {},
+                    saveAsImage: {}
+                }
+            }
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        browserVersionMap.setOption(option);
+		var param = {
+			page : 1,
+			size : 20
+		};
+
+		function setDate(days){
+			//$("#start-date").attr("disabled","disabled");
+			//$("#end-date").attr("disabled","disabled");
+			var startDate = new Date();
+			days = days || 0;
+			var endDate = new Date();
+			startDate.setTime(startDate.getTime() - days * 24 * 60 * 60 * 1000);
+			$("#start-date").val(formatDate(startDate));
+			$("#end-date").val(formatDate(endDate));
+			param.page = 1;
+			search();
+		}
+		
+		function formatDate(date){
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			day = day > 9 ? day : '0' + day;
+			month = month > 9 ? month : '0' + month;
+			return year + '-' + month + '-' + day;
+		}
+		
+		$("#stat-7").click(function(){
+			setDate(90);
+		});
+		
+		$("#stat-30").click(function(){
+			setDate(180);
+		});
+		
+		$("#stat-today").click(function(){
+			setDate(30);
+		});
+		
+		$("#stat-custom").click(function(){
+			//$("#start-date").removeAttr("disabled");
+			//$("#end-date").removeAttr("disabled");
+		});
+		
+		setDate(30);
+
+		$("#date-search-btn").click(function() {
+			param.page = 1;
+			search();
+		});
+
+		function search() {
+			param.start = $("#start-date").val() + " 00:00:00";
+			param.end = $("#end-date").val() + " 23:59:59";
+			$(document.body).mask("正在加载...");
+			$.getJSON(ctx+"/statistics/chart",{
+					start : $("#start-date").val() + " 00:00:00",
+					end : $("#end-date").val() + " 23:59:59"
+				},function(data){
+			
+				var accessSerie = {
+		                name: '访问人数',
+		                type: 'map',
+		                mapType: 'china',
+		                roam: false,
+		                label: {
+		                    normal: {
+		                        show: false
+		                    },
+		                    emphasis: {
+		                        show: false
+		                    }
+		                }
+					}
+				var viewsSerie = {
+		                name: '流量',
+		                type: 'map',
+		                mapType: 'china',
+		                roam: false,
+		                label: {
+		                    normal: {
+		                        show: false
+		                    },
+		                    emphasis: {
+		                        show: false
+		                    }
+		                }
+					}
+				var accessData = [];
+				var viewsData = [];
+				var mapData = data.map;
+				for(var i = 0;i<mapData.length;i++){
+					var record = mapData[i];
+					accessData.push({
+						name : record.province,
+						value : record.access
+					});
+					viewsData.push({
+						name : record.province,
+						value : record.views
+					});
+				}
+				accessSerie.data = accessData;
+				viewsSerie.data = viewsData;
+				accessMap.setOption({
+					series : [accessSerie,viewsSerie]
+				});
+				accessMap.dispatchAction({
+				    type: 'restore'
+				});
+				
+				var serie = {
+		            name: '访问设备',
+		            type: 'pie',
+		            radius : '55%',
+		            center: ['50%', '40%'],
+		            data : data.device,
+		            itemStyle: {
+		                emphasis: {
+		                    shadowBlur: 10,
+		                    shadowOffsetX: 0,
+		                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+		                }
+		            }
+		        }
+				deviceMap.setOption({
+					series : [serie]
+				});
+				
+				var serie = {
+		            name: '操作系统',
+		            type: 'pie',
+		            radius : '55%',
+		            center: ['50%', '50%'],
+		            data : data.os,
+		            itemStyle: {
+		                emphasis: {
+		                    shadowBlur: 10,
+		                    shadowOffsetX: 0,
+		                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+		                }
+		            }
+		        }
+				osMap.setOption({
+					series : [serie]
+				});
+				
+				var serie = {
+		            name: '浏览器',
+		            type: 'pie',
+		            radius : '55%',
+		            center: ['50%', '50%'],
+		            data : data.browser,
+		            itemStyle: {
+		                emphasis: {
+		                    shadowBlur: 10,
+		                    shadowOffsetX: 0,
+		                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+		                }
+		            }
+		        }
+				browserMap.setOption({
+					series : [serie]
+				});
+				
+				$(document.body).unmask();
+			});
+			//searchDevice();
+			//searchOS();
+			//searchBrowser();
+		}
+		function showBrowserVersion(browser) {
+			param.start = $("#start-date").val() + " 00:00:00";
+			param.end = $("#end-date").val() + " 23:59:59";
+			$(document.body).mask("正在加载...");
+			$.getJSON(ctx+"/statistics/chart/browserVersion",{
+					browser :browser,
+					start : $("#start-date").val() + " 00:00:00",
+					end : $("#end-date").val() + " 23:59:59"
+				},function(data){
+					$("#browserVersionModal").modal('show');
+					$(document.body).unmask();
+					var serie = {
+			            name: '浏览器版本',
+			            type: 'pie',
+			            radius : '55%',
+			            center: ['50%', '50%'],
+			            data : data,
+			            itemStyle: {
+			                emphasis: {
+			                    shadowBlur: 10,
+			                    shadowOffsetX: 0,
+			                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+			                }
+			            }
+			        }
+					browserVersionMap.setOption({
+						width : $(".modal-body").width(),
+						series : [serie]
+					});
+				});
+		}
+		//search();
+	})();
+</script>

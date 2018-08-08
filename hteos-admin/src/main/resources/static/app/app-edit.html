@@ -1,0 +1,543 @@
+<form role="form" id="app_edit_form">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="dashboard-viewport-tile">
+                <span id="return-btn" class="metro-icon-arrow-left-3 dashboard-nav-icon"></span> 编辑应用
+            </h2>
+        </div>
+        <div class="col-md-7">
+            <h4
+                    style="margin-bottom: 20px;
+			border-bottom: 1px solid #ccc;
+			padding-bottom: 10px;">应用信息</h4>
+            <ul class="nav nav-tabs" style="margin-bottom: 10px;">
+                <li class="active"><a href="#info" data-toggle="tab">基本信息</a></li>
+                <li><a href="#ui" data-toggle="tab">样式设计</a></li>
+                <li><a href="#desc" data-toggle="tab">详细信息</a></li>
+                <!-- <li class="dropdown"><a href="#preview" data-toggle="tab">预览图片</a>
+                </li> -->
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade active in" id="info">
+                    <input type="hidden" name="id">
+                    <input type="hidden" name="provider">
+                    <input type="hidden" name="installCount">
+                    <input type="hidden" name="reviewCount">
+                    <input type="hidden" name="score">
+                    <div class="form-group">
+                        <label for="appName">应用名称</label> <input type="text"
+                                                                 class="form-control" id="appName" name="name"
+                                                                 placeholder="应用名称，不超过10个汉字" required>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label>默认应用</label>
+                            <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+                                <label class="btn btn-success col-md-6">
+                                    <input type="radio" name="isDefault" value="true">
+                                    <span class="glyphicon glyphicon-ok"></span> 是
+                                </label>
+                                <label class="btn btn-success col-md-6">
+                                    <input type="radio" name="isDefault" value="false">
+                                    <span class="glyphicon glyphicon-remove"></span> 否
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="category">应用分类</label> <select class="form-control"
+                                                                       id="category" name="category">
+                            <option value="1" selected>资讯</option>
+                            <option value="2">社交</option>
+                            <option value="3">游戏</option>
+                            <option value="4">娱乐</option>
+                            <option value="5">视频</option>
+                            <option value="6">音乐</option>
+                            <option value="7">办公</option>
+                            <option value="8">工具</option>
+                            <option value="9">其他</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label>系统应用</label>
+                            <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+                                <label class="btn btn-success col-md-6">
+                                    <input type="radio" name="isNative" value="true">
+                                    <span class="glyphicon glyphicon-ok"></span> 是
+                                </label>
+                                <label class="btn btn-success col-md-6">
+                                    <input type="radio" name="isNative" value="false">
+                                    <span class="glyphicon glyphicon-remove"></span> 否
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="code">应用代码</label> <input type="text"
+                                                                  class="form-control" id="code" name="code"
+                                                                  placeholder="应用代码">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="appVersion">应用版本</label> <input type="text"
+                                                                        class="form-control" id="appVersion"
+                                                                        name="appVersion"
+                                                                        placeholder="应用版本，不超过10个汉字" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="toggle">特殊处理标记</label> <input type="text"
+                                                                      class="form-control" id="toggle" name="toggle"
+                                                                      placeholder="对磁贴进行特殊处理">
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade " id="ui">
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="ui">磁贴样式</label> <select class="form-control"
+                                                                 id="ui" name="ui">
+                            <option value="1" selected>中间显示图标 左下角显示名称</option>
+                            <option value="2">中间显示图片 左下角显示名称</option>
+                            <option value="3">中间显示图片 左下角显示图标</option>
+                            <option value="4">中间显示图标 左下角不显示</option>
+                            <option value="5">中间显示图片 左下角不显示</option>
+                        </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">应用尺寸</label>
+                            <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+                                <label class="btn btn-success col-md-6"> <input type="radio"
+                                                                                name="size" value="default"> <span
+                                        class="glyphicon glyphicon-plus"></span> 大
+                                </label> <label class="btn btn-success col-md-6"> <input type="radio"
+                                                                                         name="size" value="mini"> <span
+                                    class="glyphicon glyphicon-minus"></span> 小
+                            </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="">文字颜色</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="color"
+                                       value="rgb(255, 255, 255)"/> <span class="input-group-btn">
+					<button type="button" data-name="color"
+                            class="btn btn-primary dropdown-toggle"
+                            data-raw="[name='color']" data-toggle="color"
+                            data-color-format="rgb" data-color="rgb(255, 255, 255)"
+                            style="background-color: rgb(255, 255, 255)">
+						&nbsp;&nbsp;&nbsp;&nbsp;</button>
+				</span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">背景颜色</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="bgcolor"
+                                       value="rgb(31, 83, 160)"/> <span class="input-group-btn">
+					<button type="button" data-name="bgcolor"
+                            class="btn btn-primary dropdown-toggle"
+                            data-raw="[name='bgcolor']" data-toggle="color"
+                            data-color-format="rgb" data-color="rgb(31, 83, 160)"
+                            style="background-color: rgb(31, 83, 160)">
+						&nbsp;&nbsp;&nbsp;&nbsp;</button>
+				</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <input type="hidden" name="icon"> <input type="file"
+                                                                     style="display: none" id="iconFileInput"/> <label
+                                style="width: 100%">应用图标</label>
+                            <div class="app-icon-wrapper">
+                                <img alt="">
+                            </div>
+                            <br/>
+                            <button id="iconBtn" type="button" class="btn btn-default">
+                                选择图标
+                            </button>
+                            <p style="margin-top: 5px;">
+                                <small>推荐规格64*64</small>
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="hidden" name="image"> <input type="file"
+                                                                      style="display: none" id="imageFileInput"/> <label
+                                for="">背景图片</label>
+                            <div class="app-image-wrapper">
+                                <img alt="">
+                            </div>
+                            <br/>
+                            <button id="imageBtn" type="button" class="btn btn-default">
+                                选择图片
+                            </button>
+                            <p style="margin-top: 5px;">
+                                <small>推荐规格277*134</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade in" id="desc">
+                    <div class="form-group">
+                        <label for="subject">应用描述</label>
+                        <textarea class="form-control" id="subject" name="subject"
+                                  style="height: 50px;" placeholder="应用详细信息，不超过100个汉字 "></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="appDesc">详细信息</label>
+                        <textarea class="form-control" id="appDesc" name="desc"
+                                  style="height: 200px;" placeholder="应用详细信息，不超过300个汉字 "></textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-5">
+            <h4
+                    style="margin-bottom: 20px;
+				border-bottom: 1px solid #ccc;
+				padding-bottom: 10px;">高级属性</h4>
+            <div>
+                <ul id="myTab" class="nav nav-tabs" style="margin-bottom: 10px;">
+                    <li class="active"><a href="#event" data-toggle="tab">事件处理</a></li>
+                    <li><a href="#window" data-toggle="tab">任务设置</a></li>
+                    <li><a href="#tile" data-toggle="tab">动态磁贴</a></li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane active fade in " id="event">
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="appName">事件响应</label>
+                                <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+                                    <label class="btn btn-success col-md-6">
+                                        <input type="radio" name="click" value="open"> 打开资源
+                                    </label>
+                                    <label class="btn btn-success col-md-6">
+                                        <input type="radio" name="click" value="execute"> 执行脚本
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>加载模式</label>
+                                <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+                                    <label class="btn btn-success col-md-6">
+                                        <input type="radio" name="loadType" value="iframe"> IFRAME
+                                    </label>
+                                    <label class="btn btn-success col-md-6">
+                                        <input type="radio" name="loadType" value="ajax"> AJAX
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="path">资源路径</label> <input type="text"
+                                                                  class="form-control" id="path" name="path"
+                                                                  placeholder="点击磁贴打开的资源路径">
+                        </div>
+                        <div class="form-group">
+                            <label for="script">脚本</label>
+                            <textarea name="script" class="form-control" id="script" style="height: 70px;"
+                                      placeholder="点击磁贴执行的脚本"></textarea>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tile">
+                        <div class="form-group">
+                            <label for="url">远程地址</label> <input type="text"
+                                                                 class="form-control" id="url" name="url"
+                                                                 placeholder="加载数据的远程地址">
+                        </div>
+                        <div class="form-group">
+                            <label for="render">渲染方式</label>
+                            <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+                                <label class="btn btn-success"> <input
+                                        type="radio" name="renderer" checked value="plain"> 直接渲染
+                                </label> <label class="btn btn-success"> <input type="radio"
+                                                                                name="renderer" value="template"> 模板渲染
+                            </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="tpl">渲染模板</label>
+                            <textarea class="form-control" id="tpl" name="tpl"
+                                      style="height: 100px;" placeholder="通过模板渲染数据"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="html">静态内容</label>
+                            <textarea class="form-control" id="html" name="html"
+                                      style="height: 100px;" placeholder="磁贴的静态内容"></textarea>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade " id="window">
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label>运行模式</label>
+                                <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+                                    <label class="btn btn-success col-md-6">
+                                        <input type="radio" name="mode" value="window"> 窗口
+                                    </label>
+                                    <label class="btn btn-success col-md-6">
+                                        <input type="radio" name="mode" value="dock"> 侧边栏
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>默认最大化</label>
+                                <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+                                    <label class="btn btn-success  col-md-6">
+                                        <input type="radio" name="maximized" value="true"> 是
+                                    </label>
+                                    <label class="btn btn-success col-md-6">
+                                        <input type="radio" name="maximized" value="false"> 否
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label>可最大化</label>
+                                <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+                                    <label class="btn btn-success col-md-6">
+                                        <input type="radio" name="maximizable" value="true"> 是
+                                    </label>
+                                    <label class="btn btn-success col-md-6">
+                                        <input type="radio" name="maximizable" value="false"> 否
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>可变尺寸</label>
+                                <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+                                    <label class="btn btn-success col-md-6">
+                                        <input type="radio" name="resizable" value="true"> 是
+                                    </label>
+                                    <label class="btn btn-success col-md-6">
+                                        <input type="radio" name="resizable" value="false"> 否
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="width">初始长度</label>
+                                <input type="text" class="form-control" id="width" name="width" placeholder="窗口的初始宽度">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="width">初始高度</label>
+                                <input type="text" class="form-control" id="height" name="height" placeholder="窗口初始高度">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label>初始位置</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="top" name="top" placeholder="上">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="bottom" name="bottom" placeholder="下">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="left" name="left" placeholder="左">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="right" name="right" placeholder="右">
+                            </div>
+                        </div>
+                        <div class="alert alert-info" role="alert">
+                            如果点击事件为“执行脚本”则无需设置该选项卡的内容，如果选择的“侧边栏”模式，则无需设置下面的的属性
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="pull-right dashboard-footer">
+                <!-- <button type="button" class="btn btn-info" data-dismiss="viewport">
+                    <span class="glyphicon glyphicon-eye-open"></span> 预览
+                </button> -->
+                <button id="cancelButton" type="button" class="btn btn-danger" data-dismiss="viewport">
+                    <span class="glyphicon glyphicon-remove"></span> 取消
+                </button>
+                <button id="saveButton" type="submit" data-loading-text="正在保存..."
+                        class="btn btn-success">
+                    <span class="glyphicon glyphicon-floppy-disk"></span> 保存
+                </button>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        $("#return-btn").click(function () {
+            Index.Nav.load("/app/app.html");
+        });
+
+        $("#cancelButton").click(function () {
+            Index.Nav.load("/app/app.html");
+        });
+        $("#app_edit_form").submit(function () {
+            var button = $("#saveButton");
+            button.html("正在保存...");
+            button.attr("disabled", "disabled");
+            var xhr =
+                $.ajax({
+                    url: "/app/save",
+                    method: "POST",
+                    data: $(this).serialize(),
+                    dataType: "json"
+                });
+            xhr.success(function (data) {
+                if (data.success) {
+                    if (window.uploadIcon || window.uploadImage) {
+                        upload(data.message);
+                    } else {
+                        Index.Nav.load("/app/app.html");
+                    }
+                } else {
+                    $(".fail-result").html("保存失败:" + data.message);
+                    $(".fail-result").show();
+                }
+            });
+            xhr.error(function (data) {
+                button.removeAttr("disabled");
+                $(".fail-result").html(
+                    "发生未知错误，请稍候再试");
+                $(".fail-result").show();
+            })
+            return false;
+        });
+
+        var xhr = $.ajax({
+            url: "/app/get",
+            data: {
+                id: window.currentApp
+            },
+            dataType: "json"
+        });
+
+        xhr.success(function (data) {
+            for (var a in data) {
+                var input = $("[name='" + a + "']");
+                if (input.attr("type") != "radio") {
+                    input.val(data[a]);
+                }
+            }
+            var bgcolor = $("[data-name='bgcolor']");
+            bgcolor.data("color", data.bgcolor);
+            bgcolor.css("background-color", data.bgcolor);
+
+            var color = $("[data-name='color']");
+            color.data("color", data.color);
+            color.css("background-color", data.color);
+
+            var radios = ["size", "click", "toggleCaption",
+                "isDefault", "isNative", "maximizable", "resizable", "mode"
+                , "loadType", "renderer", "maximized"];
+
+            for (var i = 0; i < radios.length; i++) {
+                var name = radios[i];
+                $("[name='" + name + "']").each(function () {
+                    var radio = $(this);
+                    if (radio.val() == "" + data[name]) {
+                        radio.attr("checked", "checked");
+                        radio.parent().addClass("active");
+                    }
+                });
+            }
+
+            $(".app-icon-wrapper > img").attr("src", data.icon);
+            $(".app-image-wrapper > img").attr("src", data.image);
+        });
+
+        $("#iconBtn").click(function () {
+            $("#iconFileInput").click();
+        });
+
+        $("#iconFileInput").change(
+            function () {
+                window.appIcon = this.files[0];
+                if (window.appIcon) {
+                    if (appIcon.type != "image/png"
+                        && appIcon.type != "image/gif"
+                        && appIcon.type != "image/jpeg") {
+                        $("#icon-error").html("请选择图片文件");
+                        $("#icon-error").show();
+                    } else if (appIcon.size > 1024 * 1024) {
+                        $("#icon-error").html("图片文件太大");
+                        $("#icon-error").show();
+                    } else {
+                        $("#icon-error").hide();
+                        window.uploadIcon = true;
+                        var reader = new FileReader();
+                        reader.onload = function () {
+                            $(".app-icon-wrapper > img").attr("src",this.result);
+                        }
+                        reader.readAsDataURL(appIcon);
+                    }
+                }
+            });
+
+        $("#imageBtn").click(function () {
+            $("#imageFileInput").click();
+        });
+
+        $("#imageFileInput").change(
+            function () {
+                window.appImage = this.files[0];
+                if (appImage.type != "image/png"
+                    && appImage.type != "image/gif"
+                    && appImage.type != "image/jpeg") {
+                    $("#image-error").html("请选择图片文件");
+                    $("#image-error").show();
+                } else if (appImage.size > 1024 * 1024) {
+                    $("#image-error").html("图片文件太大");
+                    $("#image-error").show();
+                } else {
+                    $("#image-error").hide();
+                    window.uploadImage = true;
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        $(".app-image-wrapper > img").attr("src", this.result);
+                    }
+                    reader.readAsDataURL(appImage);
+                }
+            });
+
+        function upload(id) {
+            var button = $("#saveButton");
+            button.html("正在上传图片...");
+            button.attr("disabled", "disabled");
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        Index.Nav.load("/app/app.html");
+                        window.appIcon = null;
+                        window.appImage = null;
+                    } else {
+                        $(".fail-result").html("上传失败:" + data.message);
+                        $(".fail-result").show();
+                        button.html("保存");
+                        button.removeAttr("disabled");
+                    }
+                }
+            }
+            xhr.open("POST", "/app/upload", true);
+            var fd = new FormData();
+            fd.append("id", id);
+            if (window.uploadIcon) {
+                fd.append("icon", window.appIcon);
+            }
+            if (window.uploadImage) {
+                fd.append("image", window.appImage);
+            }
+            xhr.send(fd);
+        }
+    </script>
+</form>
+
