@@ -1,5 +1,7 @@
 # HteOS
 [HteOS](http://www.hteos.com)是一款全新的Web桌面应用开发框架，Win10 Metro UI风格设计，响应式设计适配PC端、移动端所有设备，广泛应用于Web应用开发，移动应用开发、业务系统、智能电视开发。
+
+HteOS可以集成其他任何前端框架，例如：Vue、Angular、React等主流前端开发框架，后续我们也将会开发出与这些框架进行集成的示例，敬请期待。
 ## 简介
 本项目是基于HteOS4.0构建的Web桌面应用，后台基于SpringBoot2构建。在线演示地址：[http://demo.hteos.com](http://demo.hteos.com)
 
@@ -24,10 +26,10 @@ hteos-demo\src\main\resources\application.yml
 ~~~
 hteos-demo\src\main\java\com\hteos\demo\DemoApplication.java
 ~~~
-使用这个类进行启动，端口8080，端口号可以修改但是需要
+使用这个类进行启动，端口8080，端口号可以修改但是需要hteos-demo-web/js/config/dev.js修改后台服务的端口.
 ### 第四步 启动前台
 ~~~
-hteos-demo-web\app.html
+hteos-demo-web\index.html
 ~~~
 在idea中可以直接右键运行这个文件
 
