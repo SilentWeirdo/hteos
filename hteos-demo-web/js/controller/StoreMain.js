@@ -2,7 +2,7 @@
 
     HteOS.store = {};
 
-    var Main = HteOS.store.Main = function () {
+    var Main = HteOS.controller.StoreMain = function () {
         this.server = HteOS.server || 'http://localhost';
     };
 
@@ -73,7 +73,7 @@
                         icon: app.icon,
                         shell: 'window',
                         templateUrl: "tpl/store-detail.html",
-                        controller: "HteOS.store.Detail",
+                        controller: "HteOS.controller.StoreDetail",
                         params: {
                             id: app.id
                         }

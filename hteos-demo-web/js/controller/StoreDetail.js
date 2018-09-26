@@ -1,6 +1,6 @@
 (function (win) {
 
-    var Detail = HteOS.store.Detail = function (params) {
+    var Detail = HteOS.controller.StoreDetail = function (params) {
         HteOS.apply(this, params);
         this.server = HteOS.server || 'http://localhost:8080';
     };
