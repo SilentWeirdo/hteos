@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-08-02 13:35:10
+Date: 2018-09-27 00:19:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -148,7 +148,7 @@ INSERT INTO `hteos_app_task` VALUES ('adf28bd453021445015306f7c5980005', '0', 't
 INSERT INTO `hteos_app_task` VALUES ('adf28bd453021445015306fa7dc40006', '0', 'task', '0', '0', '', null, '', '0', '', 'window', '', '', '0', '0', null, null);
 INSERT INTO `hteos_app_task` VALUES ('adf28bd453021445015306fc3a3b0007', '0', 'task', '0', '0', '', null, '', '0', '', 'dock', '', 'tpl/profile.html', '0', '0', 'HteOS.controller.Profile', null);
 INSERT INTO `hteos_app_task` VALUES ('adf28bd453021445015306ff2bc80008', '0', 'task', '0', '0', '', null, '', '0', '', 'dock', '', 'setting.html', '0', '0', 'HteOS.controller.Setting', null);
-INSERT INTO `hteos_app_task` VALUES ('adf28bd4530214450153070163890009', '0', 'task', '600', '0', '', null, '', '0', '', 'window', '', 'tpl/store.html', '0', '1180', 'HteOS.controller.Store', null);
+INSERT INTO `hteos_app_task` VALUES ('adf28bd4530214450153070163890009', '0', 'task', '600', '0', '', null, '', '0', '', 'window', '', 'store.html', '0', '1180', 'HteOS.controller.StoreMain', 'https://cdn.bootcss.com/vue/2.5.15/vue.min.js');
 INSERT INTO `hteos_app_task` VALUES ('adf28bd453021445015307033d9a000c', '0', 'none', '0', '0', '', null, '', '0', '', 'window', '', '', '0', '0', '', null);
 INSERT INTO `hteos_app_task` VALUES ('adf28bd454a540dc0154a54c84550000', '0', 'task', '450', '0', '\0', null, '\0', '0', '', 'window', '<iframe src=\"http://baidu.kuaidi100.com/index2.html\" ></iframe>', '', '0', '546', null, null);
 INSERT INTO `hteos_app_task` VALUES ('adf28bd454b9af650154bf2017b5004e', '0', 'task', '0', '0', '', null, '', '0', '', 'window', '<iframe frameborder=\"0\" src=\"http://www.letv.com/\"></iframe>', '', '0', '0', '', null);
@@ -199,7 +199,7 @@ INSERT INTO `hteos_app_tile` VALUES ('adf28bd453021445015306f7c5980005', 'rgba(2
 INSERT INTO `hteos_app_tile` VALUES ('adf28bd453021445015306fa7dc40006', 'rgba(31,83,160,1)', 'rgb(255,255,255)', 'clock', 'default', '', '', '1', '', null);
 INSERT INTO `hteos_app_tile` VALUES ('adf28bd453021445015306fc3a3b0007', 'rgba(31,83,160,1)', 'rgb(255,255,255)', '', 'mini', '', '', '2', '', null);
 INSERT INTO `hteos_app_tile` VALUES ('adf28bd453021445015306ff2bc80008', 'rgba(31,83,160,1)', 'rgb(255,255,255)', '', 'default', '', '', '1', '', null);
-INSERT INTO `hteos_app_tile` VALUES ('adf28bd4530214450153070163890009', 'rgba(31,83,160,1)', 'rgb(255,255,255)', '', 'mini', '', '', '1', '', null);
+INSERT INTO `hteos_app_tile` VALUES ('adf28bd4530214450153070163890009', 'rgba(31,83,160,1)', 'rgb(255,255,255)', '', 'mini', '', '', '1', '', '');
 INSERT INTO `hteos_app_tile` VALUES ('adf28bd453021445015307033d9a000c', 'rgba(96,160,31,1)', 'rgb(255,255,255)', 'HteOS.controller.Music', 'large', '', '', '1', '', null);
 INSERT INTO `hteos_app_tile` VALUES ('adf28bd454a540dc0154a54c84550000', 'rgba(31,83,160,1)', 'rgb(255,255,255)', '', 'mini', '', '', '1', '', null);
 INSERT INTO `hteos_app_tile` VALUES ('adf28bd454b9af650154bf2017b5004e', 'rgba(196,0,0,1)', 'rgb(255,255,255)', '', 'mini', '<div class=\"hte-flip-container hte-flip-vertical\"><div class=\"hte-flip-front hte-tile-outline\" style=\"background-color:<%=bgcolor%>\"><img src=\"<%=icon%>\" class=\"hte-tile-icon\" /></div><div class=\"hte-flip-back hte-tile-outline hte-tile-title\" style=\"background-color:<%=bgcolor%>\"><%=name%></div></div>', '', '1', '', null);
