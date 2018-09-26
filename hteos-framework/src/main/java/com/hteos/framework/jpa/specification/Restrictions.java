@@ -22,8 +22,8 @@ public class Restrictions {
      * @param property
      * @return
      */
-    public static <T> RangeExpression<T> between(String property, Object start, Object end) {
-        return new RangeExpression<>(property, start, end);
+    public static <T> RangeExpression<T> between(String property, Comparable start, Comparable end) {
+        return new RangeExpression<T>(property, start, end);
     }
 
 

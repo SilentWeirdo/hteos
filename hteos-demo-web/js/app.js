@@ -9,18 +9,18 @@
 
     HteOS.controller = {};
     HteOS.EventManager.on("ready", function () {
-        initEnvironment();
+        initEnviroment();
         $(".hte-preloader-text").text("正在加载配置..");
         //注册存储
         HteOS.StorageManager.register(HteOS.storage.Remote);
-
-        HteOS.StorageManager.getStorage().getEnvironment().done(function (environment) {
+        HteOS.StorageManager.getStorage().getEnvironment().done(function (enviroment) {
             $(".hte-preloader-text").text("正在加载桌面..");
+
             //动态加载皮肤
-            var promise = HteOS.Loader.load(HteOS.basePath + "css/" + (environment.preference.theme || 'blue') + "/hteos.min.css");
+            var promise = HteOS.Loader.load(HteOS.basePath + "css/" + enviroment.preference.theme + "/hteos.min.css");
             promise.done(function () {
                 window.setTimeout(function () {
-                    HteOS.Bootstrap.start(environment);
+                    HteOS.Bootstrap.start(enviroment);
                 }, 300);
             });
         }).fail(function () {
@@ -28,12 +28,14 @@
             $(".hte-preloader-text").text("加载桌面配置失败，请稍后再试!");
             return;
         });
+
+
     });
 
     /**
      * 初始化桌面环境
      */
-    function initEnvironment() {
+    function initEnviroment() {
 
         HteOS.logo = "images/logo.png";
         HteOS.title = "<span class=\"segoe\">HteOS</span> - <small>与众不同的 <span class=\"segoe\">Web</span></small>";
@@ -68,7 +70,7 @@
             icon: "glyphicon glyphicon-folder-close",
             name: "应用市场",
             handler: function () {
-                HteOS.TaskManager.launch(HteOS.app.AppManager.getByKey('store'));
+                HteOS.TaskManager.launch(HteOS.app.AppManager.getByKey('myhteos'));
             }
         }, {
             icon: "glyphicon glyphicon-list",
@@ -112,17 +114,18 @@
                     HteOS.Locker.lock();
                 }
             }
-        },{
+        }, {
             id: 'taskmanager',
             icon: 'glyphicon glyphicon-th-list',
             name: '任务管理',
-            handler: function(){
+            handler: function () {
                 HteOS.TaskManager.start({
                     id: 'taskmanager',
                     name: "任务管理",
                     templateUrl: "taskmanager.html",
                     controller: "HteOS.controller.TaskManager",
-                    shell: 'window'
+                    shell: 'window',
+                    dependencies: "https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"
                 });
             }
         }, '-', {

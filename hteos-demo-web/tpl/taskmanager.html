@@ -1,0 +1,20 @@
+<div class="hte-taskmanager">
+    <table class="table table-condensed table-hover">
+        <thead>
+        <tr>
+            <th>编号</th>
+            <th style='text-align: left'>名称</th>
+            <th style='text-align: left'>URL</th>
+            <th>时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(task,index) in tasks">
+            <td>{{index + 1}}</td>
+            <td><img :src="{{task.icon}}">{{task.name}}</td>
+            <td>{{task.templateUrl}}</td>
+            <td>{{task.startTime}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

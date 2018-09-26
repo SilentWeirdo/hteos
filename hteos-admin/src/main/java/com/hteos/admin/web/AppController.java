@@ -1,9 +1,7 @@
 package com.hteos.admin.web;
 
-import com.hteos.biz.app.entity.App;
 import com.hteos.biz.app.service.AppService;
 import com.hteos.biz.installation.dto.AppDto;
-import com.hteos.biz.installation.dto.WebApp;
 import com.hteos.framework.web.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +17,6 @@ public class AppController extends BaseController {
     @RequestMapping("/app/save")
     public Object save(AppDto appDto) {
         String id = appService.save(appDto);
-        System.out.println("app id ============> " + id);
         return this.success(id);
     }
 

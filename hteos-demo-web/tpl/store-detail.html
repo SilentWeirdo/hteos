@@ -1,134 +1,157 @@
 <div class="container store-main store-app-detail " style="background-color: #fff;padding:0px">
-    <div class="store-preloader">
-        <img src="images/preloader_black.gif">
+
+    <div v-show="loading" class='app-channel-preloader'>
+        <i class='fa fa-spinner fa-pulse'></i> 正在加载中...
     </div>
-    <div class="app-dialog-header modal-header">
-        <div class="row">
-            <div class="col-md-8 col-sm-8 col-xs-8 " style="position:relative;">
-                <div class="app-info-header">
-                    <div class="app-icon-d">
-                        <img alt="" data-property="icon">
-                    </div>
-                    <div class="app-info-d">
-                        <div class="app-name-d" data-property="name"></div>
+
+    <div v-show="loadError" class='app-channel-preloader'>
+        <i class='fa fa-remove-circle'></i> 加载失败，请稍后再试
+    </div>
+    <div v-show="loaded">
+        <div class="app-dialog-header modal-header">
+            <div class="row">
+                <div class="col-md-8 col-sm-8 col-xs-8 " style="position:relative;">
+                    <div class="app-info-header">
+                        <div class="app-icon-d">
+                            <img alt="" :src="app.icon">
+                        </div>
+                        <div class="app-info-d ">
+                            <div class="app-name-d">{{app.name}}</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="app-action-d col-md-4 col-sm-4 col-xs-4 ">
-                <button class="btn small btn-success app-action-d-btn"
-                        style="padding: 3px 15px">
-                    <span class="glyphicon glyphicon-download-alt"></span> 安装
-                </button>
-                <!-- <button class="btn small btn-primary"
-                    style="padding: 3px 15px" onclick="window.history.back();">
-                    <span class="glyphicon glyphicon-chevron-left"></span> 返回
-                </button> -->
-            </div>
-            <div class="col-md-12 col-sm-12 col-xs-12 " style="position:relative;">
-                <div class="app-desc-d">
-                    <div class="app-desc-item">
-                        <span data-property="scoreHTML"></span> (<span
-                            data-property="reviewCount"></span>)
+                <div class="app-action-d col-md-4 col-sm-4 col-xs-4 ">
+                    <button v-show="!app.install" @click="install" class="btn small btn-success"
+                            style="padding: 3px 15px">
+                        <span class="glyphicon glyphicon-download-alt"></span> 安装
+                    </button>
+                    <button v-show="app.install" class="btn small btn-primary" style="padding: 3px 15px">
+                        <span class="glyphicon glyphicon-download-alt"></span> 打开
+                    </button>
+                    <button v-show="installing" disabled="disabled" class="btn small btn-success"
+                            style="padding: 3px 15px">
+                        <i class='fa fa-spinner fa-pulse'></i> 正在安装
+                    </button>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 " style="position:relative;">
+                    <div class="app-desc-d">
+                        <div class="app-desc-item">
+                            <span v-html="score(app.score)"></span> (<span
+                                data-property="reviewCount">{{app.reviewCount}}</span>)
+                        </div>
+                        <div class="app-desc-splitter"></div>
+                        <div class="app-desc-item app-category">{{app.category | category}}</div>
+                        <div class="app-desc-splitter"></div>
+                        <div class="app-desc-item app-provider">{{app.provider}}</div>
+                        <div class="app-desc-splitter"></div>
+                        <div class="app-desc-item app-count">{{app.installCount}}人安装</div>
                     </div>
-                    <div class="app-desc-splitter"></div>
-                    <div class="app-desc-item app-category" data-property="type"></div>
-                    <div class="app-desc-splitter"></div>
-                    <div class="app-desc-item app-provider" data-property="provider"></div>
-                    <div class="app-desc-splitter"></div>
-                    <div class="app-desc-item app-count" data-property="installCount"></div>
                 </div>
             </div>
         </div>
-    </div>
-    <div style="padding: 0px;">
-        <ul class="nav nav-tabs app-tabs">
-            <li class="active"><a href="#overview" data-toggle="tab">概述</a></li>
-            <li><a href="#detail" data-toggle="tab">详情</a></li>
-            <li><a href="#evaluation" data-toggle="tab">评价</a></li>
-            <!-- <li><a href="#settings" data-toggle="tab">Settings</a></li> -->
-        </ul>
-        <!-- Tab panes -->
-        <div class="tab-content app-tab" style=" background-color: #f1f1f1;">
-            <div class="tab-pane active app-overview-d" id="overview">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="app-preview carousel slide" data-ride="carousel">
-                            <ol class="carousel-indicators">
-                                <li data-target=".app-preview" data-slide-to="0"
-                                    class="active"></li>
-                                <!-- <li data-target=".app-preview" data-slide-to="1"
-                                    class=""></li>
-                                <li data-target=".app-preview" data-slide-to="2"
-                                    class=""></li> -->
-                            </ol>
-                            <div class="carousel-inner">
-                                <div class="item active">
-                                    <img class="img-thumbnail" src="images/nopreview.jpg">
+        <div style="padding: 0px;">
+            <ul class="nav nav-tabs app-tabs">
+                <li class="active"><a href="#overview" data-toggle="tab">概述</a></li>
+                <li><a href="#detail" data-toggle="tab">详情</a></li>
+                <li><a href="#evaluation" data-toggle="tab">评价</a></li>
+                <!-- <li><a href="#settings" data-toggle="tab">Settings</a></li> -->
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content app-tab" style=" background-color: #f1f1f1;">
+                <div class="tab-pane active app-overview-d" id="overview">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="app-preview carousel slide" data-ride="carousel">
+                                <ol class="carousel-indicators">
+                                    <li data-target=".app-preview" data-slide-to="0"
+                                        class="active"></li>
+                                    <!-- <li data-target=".app-preview" data-slide-to="1"
+                                        class=""></li>
+                                    <li data-target=".app-preview" data-slide-to="2"
+                                        class=""></li> -->
+                                </ol>
+                                <div class="carousel-inner">
+                                    <div class="item active">
+                                        <img class="img-thumbnail" src="images/nopreview.jpg">
+                                    </div>
                                 </div>
-                            </div>
-                            <a class="left carousel-control" href=".app-preview"
-                               data-slide="prev"> <span
-                                    class="glyphicon glyphicon-chevron-left"></span>
-                            </a> <a class="right carousel-control" href=".app-preview"
-                                    data-slide="next"> <span
-                                class="glyphicon glyphicon-chevron-right"></span>
-                        </a>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <b> 版本：</b> <span data-property="version"></span><br /> <b>
-                        最后修改日期：</b> <span data-property="lastUpdateDate"></span><br />
-                        <h3 class="app-detail-subject" data-property="subject"></h3>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane app-detail-d"  id="detail">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="app-detail-title">说明</div>
-                        <h3 class="app-detail-subject" data-property="subject"></h3>
-                        <pre class="app-detail-desc" data-property="desc"></pre>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane app-review-d" id="evaluation">
-                <div class="row">
-                    <div class="col-md-4">
-                        <h3>为此应用进行评分</h3>
-                        <div class="well well-sm app-score-d " style="margin: 5px;">
-                            <div class="text-center">
-                                <h1 class="rating-num" data-property="score"></h1>
-                                <div class="rating" data-property="scoreHTML"></div>
-                                <div>
-                                    <span class="glyphicon glyphicon-user"></span> <span
-                                        data-property="reviewCount"></span>人评分
-                                </div>
+                                <a class="left carousel-control" href=".app-preview" data-slide="prev">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                </a>
+                                <a class="right carousel-control" href=".app-preview" data-slide="next">
+                                    <span class="glyphicon glyphicon-chevron-right"></span>
+                                </a>
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <b> 版本：</b> <span>{{app.appVersion}}</span><br/> <b>
+                            最后修改日期：</b> <span>{{app.lastUpdateDate}}</span><br/>
+                            <h3 class="app-detail-subject">{{app.subject}}</h3>
+                        </div>
                     </div>
-                    <div class="col-md-8" style="padding: 0px 20px;">
-                        <div class="well well-sm">
-                            <div class="row" id="post-review-box">
-                                <div class="col-md-12">
-                                    <form accept-charset="UTF-8" action="" method="post">
-                                        <input id="ratings-hidden" name="rating" type="hidden">
-                                        <textarea class="review-text form-control animated"
-                                                  cols="50" id="new-review" name="comment"
-                                                  placeholder="填写您对该应用的评价..." rows="5"></textarea>
+                </div>
+                <div class="tab-pane app-detail-d" id="detail">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="app-detail-title">说明</div>
+                            <h3 class="app-detail-subject">{{app.subject}}</h3>
+                            <pre class="app-detail-desc">{{app.desc}}</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane app-review-d" id="evaluation">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h3>为此应用进行评分</h3>
+                            <div class="well well-sm app-score-d " style="margin: 5px;">
+                                <div class="text-center">
+                                    <h1 class="rating-num">{{app.score}}</h1>
+                                    <div class="rating" v-html="score(app.score)"></div>
+                                    <div>
+                                        <span class="glyphicon glyphicon-user"></span>
+                                        <span>{{app.reviewCount}}</span>人评分
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8" style="padding: 0px 20px;">
+                            <div class="well well-sm">
+                                <div class="row" id="post-review-box">
+                                    <div class="col-md-12">
+                                        <form accept-charset="UTF-8" action="" method="post">
+                                            <input id="ratings-hidden" name="rating" type="hidden">
+                                            <textarea class="review-text form-control animated" cols="50"
+                                                      name="comment" v-model="review" placeholder="填写您对该应用的评价..." rows="5"></textarea>
 
-                                        <div class="text-right">
-													<span id="operate-tip"
-                                                          style="color: red;margin-right: 5px;"></span>
-                                            <div class="app-review-stars starrr" data-rating="0"></div>
-                                            <button class="btn btn-success review-btn" type="button"
-                                                    style="padding: 3px 15px">保存</button>
-                                        </div>
-                                    </form>
+                                            <div class="text-right">
+                                                <span id="operate-tip" style="color: red;margin-right: 5px;"></span>
+                                                <div class="app-review-stars starrr" data-rating="0"></div>
+                                                <button class="btn btn-success review-btn" :disabled="!app.install"
+                                                        type="button" style="padding: 3px 15px;margin-top: 5px;">提交
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
+                            <ul class="app-reviews">
+                                <li v-for="review in app.reviews" class="left clearfix">
+                                    <span class="app-review-account-face pull-left">
+                                        <img :src="face" class="img-circle"/>
+                                    </span>
+                                    <div class="app-review-body clearfix">
+                                        <div class="header">
+                                            <strong class="primary-font">{{review.account}}</strong>
+                                            <span class="app-review-score" v-html="score(review.score)">{{review.score}}</span>
+                                            <small class="pull-right text-muted">
+                                                <span class="glyphicon glyphicon-time"></span> {{review.date}}
+                                            </small>
+                                        </div>
+                                        <p>{{review.review}}</p>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
-                        <ul class="app-reviews">
-                        </ul>
                     </div>
                 </div>
             </div>

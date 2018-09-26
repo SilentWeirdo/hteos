@@ -187,6 +187,11 @@
                                    placeholder="动态磁贴控制器JS类">
                         </div>
                         <div class="form-group">
+                            <label for="tile.dependencies">依赖</label>
+                            <textarea class="form-control" id="tile.dependencies" name="tile.dependencies"
+                                      style="height: 100px;" placeholder="动态磁贴运行的依赖，多个依赖换行"></textarea>
+                        </div>
+                        <div class="form-group">
                             <label for="dataUrl">数据URL</label>
                             <input type="text" class="form-control" id="dataUrl" name="tile.dataUrl"
                                    placeholder="加载数据的数据渲染模板">
@@ -288,6 +293,11 @@
                         <div class="form-group">
                             <label for="dataUrl">控制器</label>
                             <input type="text" class="form-control" id="task.controller" name="task.controller" placeholder="任务控制器">
+                        </div>
+                        <div class="form-group">
+                            <label for="task.dependencies">依赖</label>
+                            <textarea class="form-control" id="task.dependencies" name="task.dependencies"
+                                      style="height: 100px;" placeholder="应用运行的依赖，多个依赖换行"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="templateUrl">模板地址</label>

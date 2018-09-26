@@ -191,6 +191,9 @@ public class InstallationServiceImpl implements InstallationService {
      */
     @Override
     public WebApp install(String id) {
+
+        Assert.isTrue(UserContext.isLoggedIn(),"没有登录");
+
         User user = userRepository.findById(UserContext.getUser().getId()).get();
         App app = appRepository.findById(id).get();
 

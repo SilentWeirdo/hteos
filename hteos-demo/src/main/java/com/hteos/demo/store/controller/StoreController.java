@@ -33,18 +33,14 @@ public class StoreController extends BaseController {
     private ReviewService reviewService;
 
     @ResponseBody
-    @RequestMapping("/store/channel/{channel}")
-    public Object getChannel(@PathVariable String channel, Integer size) {
-        if (channel.equals("hot")) {
-            return storeService.getHotChannel(size);
-        } else if (channel.equals("install")) {
-            return storeService.getInstallChannel(size);
-        } else if (channel.equals("score")) {
-            return storeService.getScoreChannel(size);
-        } else if (channel.equals("new")) {
-            return storeService.getNewChannel(size);
-        }
-        return null;
+    @RequestMapping("/store")
+    public Object getChannel(Integer size) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("hot", this.storeService.getHotChannel(size));
+        result.put("install", this.storeService.getInstallChannel(size));
+        result.put("score", this.storeService.getScoreChannel(size));
+        result.put("new", this.storeService.getNewChannel(size));
+        return result;
     }
 
     @RequestMapping("/store/category/{category}")

@@ -9,10 +9,6 @@ spring:
       password: ${HTEOS_ADMIN_PASSWORD}
 hteos:
   image-server: http://asset.hteos.com
-server:
-  servlet:
-    session:
-      timeout: 2h
 ---
 spring:
   profiles: dev
@@ -30,6 +26,10 @@ spring:
       hibernate.format_sql: true
       hibernate.dialect: org.hibernate.dialect.MySQLDialect
       hibernate.id.new_generator_mappings: false
+server:
+  servlet:
+    session:
+      timeout: 30m
 aliyun:
   oss:
     endpoint: ${ALIYUN_OSS_ENDIPOINT}
@@ -49,6 +49,10 @@ spring:
     properties:
       hibernate.dialect: org.hibernate.dialect.MySQLDialect
       hibernate.id.new_generator_mappings: false
+server:
+  servlet:
+    session:
+      timeout: 30m
 aliyun:
   oss:
     endpoint: ${ALIYUN_OSS_ENDIPOINT}

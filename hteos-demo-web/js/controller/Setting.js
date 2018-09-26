@@ -1,11 +1,11 @@
 (function () {
 
     /**
-     * @author 李球 <service@hteos.com>
+     * @author LIQIU <service@hteos.com>
      * @class HteOS.component.Setting 用户设置组件
      */
     HteOS.controller.Setting = function () {
-        this.onShellRendered = function () {
+        this.onViewRender = function () {
             $(document).off("click.hte.wallpaper.link");
             $(document).on("click.hte.wallpaper.link", ".btn-link-wallpaper", function () {
                 HteOS.Messager.prompt("设置壁纸", "请输入网络图片链接", [{

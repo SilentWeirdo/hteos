@@ -40,7 +40,6 @@
 						<th>邮箱</th>
 						<th>昵称</th>
 						<th>地区</th>
-						<th>参数设置</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -57,7 +56,6 @@
 			<td>{email}</td>
 			<td>{nickName}</td>
 			<td>{residence}</td>
-			<td><a href="javascript:void(0)" onclick="setLink('{id}')">设置参数</a></td>
 		</tr>
 	</table>
 </div>
@@ -179,7 +177,7 @@
 				url : "/user/list",
 				data : param,
 				success : function(data) {
-					var total = data.total;
+					var total = data.totalElements;
 					$(".data-row").remove();
 					pagination(total);
 					render(data.content);

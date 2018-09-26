@@ -1,66 +1,163 @@
 <div class="store-main container">
-        <div class="store-preloader">
-            <img src="images/preloader_black.gif">
+    <div class="store-preloader" v-show="loading">
+        <img src="images/preloader_black.gif">
+    </div>
+    <div class="hte-store-header row">
+        <div class="col-md-8 col-sm-6 col-xs-12" style="padding-top: 10px;padding-bottom: 10px;">
+            <h3 style="display: inline-block;">
+                <img src="images/logo.png" height="30" tyle="margin-top: -5px;">&nbsp;&nbsp;<span
+                    style="font-family:Segoe Script">HteOS</span> 应用商店
+            </h3>
         </div>
-        <div class="hte-store-header row">
-            <div class="col-md-8 col-sm-6 col-xs-12" style="padding-top: 10px;padding-bottom: 10px;">
-                <h3 style="display: inline-block;">
-                    <img src="images/logo.png" height="30"
-                         style="margin-top: -5px;">&nbsp;&nbsp;<span
-                        style="font-family:Segoe Script">HteOS</span> 应用商店
-                </h3>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="pull-right app-store-search">
+                <input id="search-key" name="key" v-model="searchKey" @keyup="search(searchKey,$event)" type="text"
+                       class="form-control" placeholder="输入关键字进行搜索">
             </div>
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <div class="pull-right app-store-search">
-                        <div class="input-group">
-                            <input id="search-key" name="key" type="text" class="form-control"
-                                   placeholder="输入关键字进行搜索"> <span class="input-group-btn">
-								<button id="search-btn" class="btn btn-default" type="button">
-									<span class="glyphicon glyphicon-search"></span> 搜索
-								</button>
-							</span>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12" style="padding-right:0px;padding-left: 0px;">
+            <nav class="navbar navbar-default store-nav" role="navigation">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span> <span
+                            class="icon-bar"></span> <span class="icon-bar"></span> <span
+                            class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse"
+                     id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav app-store-nav">
+                        <li :class="{ active: active === 'index'}"><a id="store-index" href="#" @click="load('index')">首页</a>
+                        </li>
+                        <li :class="{ active: active === 'category' && currentCategory === 1 }">
+                            <a href="#" class="store-category" @click="load('category',1)">资讯</a>
+                        </li>
+                        <li :class="{ active: active === 'category' && currentCategory === 2 }">
+                            <a href="#" class="store-category" @click="load('category',2)">社交</a>
+                        </li>
+                        <li :class="{ active: active === 'category' && currentCategory === 3 }">
+                            <a href="#" class="store-category" @click="load('category',3)">游戏</a>
+                        </li>
+                        <li :class="{ active: active === 'category' && currentCategory === 4 }">
+                            <a href="#" class="store-category" @click="load('category',4)">娱乐</a>
+                        </li>
+                        <li :class="{ active: active === 'category' && currentCategory === 5 }">
+                            <a href="#" class="store-category" @click="load('category',5)">视频</a>
+                        </li>
+                        <li :class="{ active: active === 'category' && currentCategory === 6 }">
+                            <a href="#" class="store-category" @click="load('category',6)">音乐</a>
+                        </li>
+                        <li :class="{ active: active === 'category' && currentCategory === 7 }">
+                            <a href="#" class="store-category" @click="load('category',7)">办公</a>
+                        </li>
+                        <li :class="{ active: active === 'category' && currentCategory === 8 }">
+                            <a href="#" class="store-category" @click="load('category',8)">工具</a>
+                        </li>
+                        <li :class="{ active: active === 'category' && currentCategory === 9 }">
+                            <a href="#" class="store-category" @click="load('category',9)">其他</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </nav>
+        </div>
+    </div>
+    <div class="hte-store-body row">
+
+        <div v-show="loading" class='app-channel-preloader'>
+            <i class='fa fa-spinner fa-pulse'></i> 正在加载中...
+        </div>
+
+        <div v-show="loadError" class='app-channel-preloader'>
+            <i class='fa fa-remove-circle'></i> 加载失败，请稍后再试
+        </div>
+
+        <div v-show="active === 'index' && !loading">
+            <div v-for="channel in channels">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <h4>
+                        <i :class="channel.icon"></i> {{channel.name}}
+                    </h4>
+                </div>
+                <div class="app-channel col-md-12  col-sm-12 col-xs-12" data-channel="hot">
+                    <div v-for="app in channel.apps" @click="openDetail(app,$event)"
+                         class="col-md-3 col-sm-6 col-xs-12 app-wrapper">
+                        <div class="app-wrapper-inner">
+                            <img class="app-image" :src="app.image">
+                            <div class="app-overview">
+                                <img class="app-icon" :src="app.icon">
+                                <div class="app-name">{{app.name}}</div>
+                                <div class="app-score" v-html="score(app.score)"></div>
+                            </div>
                         </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-12 col-sm-12 col-xs-12" style="padding-right:0px;padding-left: 0px;">
-                <nav class="navbar navbar-default store-nav" role="navigation">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse"
-                                data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only">Toggle navigation</span> <span
-                                class="icon-bar"></span> <span class="icon-bar"></span> <span
-                                class="icon-bar"></span>
-                        </button>
+        </div>
+        <div v-show="active === 'category' && !loading">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <h4>
+                    <i class="fa fa-desktop"></i> 分类 ：<span>{{currentCategory | category}}</span> -
+                    共有<span>{{categoryResult.totalElements}}</span>个应用
+                </h4>
+            </div>
+            <div class="app-channel app-category-list store-category-body col-md-12 col-sm-12 col-xs-12">
+                <div v-for="app in categoryResult.content" @click="openDetail(app,$event)"
+                     class="col-md-3 col-sm-6 col-xs-12 app-wrapper">
+                    <div class="app-wrapper-inner">
+                        <img class="app-image" :src="app.image">
+                        <div class="app-overview">
+                            <img class="app-icon" :src="app.icon">
+                            <div class="app-name">{{app.name}}</div>
+                            <div class="app-score" v-html="score(app.score)"></div>
+                        </div>
                     </div>
-                    <div class="collapse navbar-collapse"
-                         id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav app-store-nav">
-                            <li class="active"><a id="store-index" href="#">首页</a></li>
-                            <li><a href="#" class="store-category" data-category="1">资讯</a></li>
-                            <li><a href="#" class="store-category" data-category="2">社交</a></li>
-                            <li><a href="#" class="store-category" data-category="3">游戏</a></li>
-                            <li><a href="#" class="store-category" data-category="4">娱乐</a></li>
-                            <li><a href="#" class="store-category" data-category="5">视频</a></li>
-                            <li><a href="#" class="store-category" data-category="6">音乐</a></li>
-                            <li><a href="#" class="store-category" data-category="7">办公</a></li>
-                            <li><a href="#" class="store-category" data-category="8">工具</a></li>
-                            <li><a href="#" class="store-category" data-category="9">其他</a></li>
-                        </ul>
-                    </div>
-                    <!-- /.navbar-collapse -->
-                </nav>
+                </div>
+            </div>
+            <div v-show="!categoryResult.last" class="col-md-12 col-sm-12 col-xs-12 text-center"
+                 style="margin:20px 0px;">
+                <button type="button" class="btn btn-default" @click="loadMoreCategory">
+                    <span class="glyphicon glyphicon-refresh"></span>&nbsp;加载更多
+                </button>
             </div>
         </div>
-        <div class="hte-store-body row">
 
-        </div>
-        <div class="hte-store-footer row">
-            <div class="col-md-12 col-sm-12 col-xs-12 store-footer">
-                <img src="images/logo.png" height="25"
-                     style="margin-top: -5px;">&nbsp;&nbsp;<span
-                    style="font-family:Segoe Script">HteOS</span> - 与众不同的<span
-                    style="font-family:Segoe Script">Web</span>
+        <div v-show="active === 'search' && !loading">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <h4>
+                    <i class="glyphicon glyphicon-search"></i> 搜索"<span>{{searchKey}}</span>" -
+                    搜索到<span>{{searchResult.totalElements}}</span>个相关的应用
+                </h4>
+            </div>
+            <div class="app-channel app-category-list store-search-result col-md-12 col-sm-12 col-xs-12">
+                <div v-for="app in searchResult.content" @click="openDetail(app,$event)"
+                     class="col-md-3 col-sm-6 col-xs-12 app-wrapper">
+                    <div class="app-wrapper-inner">
+                        <img class="app-image" :src="app.image">
+                        <div class="app-overview">
+                            <img class="app-icon" :src="app.icon">
+                            <div class="app-name">{{app.name}}</div>
+                            <div class="app-score" v-html="score(app.score)"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-show="!searchResult.last" class="col-md-12 col-sm-12 col-xs-12 text-center"
+                 style="margin:20px 0px;">
+                <button type="button" class="btn btn-default" @click="loadMoreSearch">
+                    <span class="glyphicon glyphicon-refresh"></span>&nbsp;加载更多
+                </button>
             </div>
         </div>
+    </div>
+    <div class="hte-store-footer row">
+        <div class="col-md-12 col-sm-12 col-xs-12 store-footer">
+            <img src="images/logo.png" height="25"
+                 style="margin-top: -5px;">&nbsp;&nbsp;<span
+                style="font-family:Segoe Script">HteOS</span> - 与众不同的<span
+                style="font-family:Segoe Script">Web</span>
+        </div>
+    </div>
 </div>

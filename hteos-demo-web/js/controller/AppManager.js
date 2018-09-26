@@ -1,27 +1,27 @@
 (function () {
     /**
-     * @author 李球 <service@hteos.com>
+     * @author LIQIU <service@hteos.com>
      * @class HteOS.component.AppManager 应用管理组件
      */
     HteOS.controller.AppManager = function () {
         var me = this;
         var html = "<%for(i = 0; i < groups.length; i ++) {%>" +
             "<%var group = groups[i],apps = group.apps;%>" +
-            "<div class=\"hte-appmanager-group\">" +
-            "<div class=\"hte-appmanager-group-header\">" +
-            "<i class=\"glyphicon glyphicon-triangle-right collapser\"></i>" +
-            "<i class=\"glyphicon glyphicon-triangle-bottom expander\"></i>" +
-            "<%=group.name%>" +
-            "</div>" +
-            "<div class=\"hte-appmanager-group-body\">" +
-            "<%for(j = 0; j < apps.length; j ++) {%>" +
-            "<div id=\"hte-appmanager-app-<%=apps[j].id%>\" data-app=\"<%=apps[j].id%>\" class=\"hte-appmanager-app\">"
-            + "<div class=\"hte-appmanager-app-icon\"><img src=\"<%=apps[j].icon%>\"></div>"
-            + "<div class=\"hte-appmanager-app-name\"><%=apps[j].name%></div>" +
-            "</div>" +
-            "<%}%>" +
-            "</div>" +
-            "</div>" +
+                "<div class=\"hte-appmanager-group\">" +
+                    "<div class=\"hte-appmanager-group-header\">" +
+                        "<i class=\"glyphicon glyphicon-triangle-right collapser\"></i>" +
+                        "<i class=\"glyphicon glyphicon-triangle-bottom expander\"></i>" +
+                        "<%=group.name%>" +
+                    "</div>" +
+                    "<div class=\"hte-appmanager-group-body\">" +
+                        "<%for(j = 0; j < apps.length; j ++) {%>" +
+                            "<div id=\"hte-appmanager-app-<%=apps[j].id%>\" data-app=\"<%=apps[j].id%>\" class=\"hte-appmanager-app\">"
+                            + "<div class=\"hte-appmanager-app-icon\"><img src=\"<%=apps[j].icon%>\"></div>"
+                            + "<div class=\"hte-appmanager-app-name\"><%=apps[j].name%></div>" +
+                            "</div>" +
+                        "<%}%>" +
+                    "</div>" +
+                "</div>" +
             "<%}%>";
 
         this.tpl = HteOS.Template.compile(html);
@@ -71,7 +71,7 @@
         /**
          * 初始化全局管理组件
          */
-        onShellRendered: function () {
+        onViewRender: function () {
             var me = this;
             var el = me.getEl();
 
@@ -93,30 +93,26 @@
             me.rendered = true;
         },
 
-        initSearch: function () {
-            var result = $(".hte-appmanager-search-result");
+        initSearch: function(){
             $("#app-search-btn").click(search);
             $("#app-search-input").keyup(function (event) {
                 search();
             });
 
             function search() {
-                result.html("");
                 var val = $("#app-search-input").val();
                 if (!val) {
-                    result.hide();
-                    $(".hte-appmanager-content").show();
+                    $(".hte-appmanager-item").show();
                 } else {
-                    $(".hte-appmanager-content").hide();
-                    result.show();
-                    var apps = HteOS.AppManager.apps;
-                    for (var a in apps) {
-                        var app = apps[a];
-                        if (app.name.indexOf(val) >= 0) {
-                            console.log(app);
-                            var item = $("#hte-appmanager-app-" + app.id).clone().attr("id", "");
-                            result.append(item);
-                        }
+                    $(".hte-appmanager-group").hide();
+                }
+                var apps = HteOS.AppManager.apps;
+                for (var a in apps) {
+                    var app = apps[a];
+                    if (app.name.indexOf(val) >= 0) {
+                        $("#hte-appmanager-item-" + app.id).show();
+                    } else {
+                        $("#hte-appmanager-item-" + app.id).hide();
                     }
                 }
             }
@@ -203,8 +199,8 @@
                     }
                 }]
             });
-            contextmenu.on("show", function (target) {
-                var me = this, target = $(target);
+            contextmenu.on("show",function (target) {
+                var me = this,target = $(target);
                 if (!target.hasClass("hte-appmanager-app")) {
                     target = target.parent(".hte-appmanager-app");
                 }
@@ -227,19 +223,17 @@
                     }
                 }
             });
-            contextmenu.on("hide", function () {
+            contextmenu.on("hide",function () {
                 $(".hte-appmanager-app.selected").removeClass("selected");
             });
         }
     });
 
     //注册模板
-    HteOS.TemplateManager.register('appmanager.html', "<div class=\"hte-appmanager hte-webkit-scrollbar\" >	\n" +
+    HteOS.TemplateManager.register('appmanager.html',"<div class=\"hte-appmanager hte-webkit-scrollbar\" >	\n" +
         "	<div class=\"hte-appmanager-body\" >	\n" +
         "		<input id=\"app-search-input\" type=\"text\" class=\"form-control\" placeholder=\"输入关键字进行搜索\">\n" +
         "		<div class=\"hte-appmanager-content\">\n" +
-        "		</div>\n" +
-        "		<div class=\"hte-appmanager-search-result\">\n" +
         "		</div>\n" +
         "	</div>\n" +
         "</div>");

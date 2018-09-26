@@ -13,10 +13,10 @@ import javax.persistence.criteria.*;
 public class RangeExpression<T> implements Specification<T> {
 
     private String property;
-    private Object start;
-    private Object end;
+    private Comparable start;
+    private Comparable end;
 
-    protected RangeExpression(String property, Object start, Object end) {
+    protected RangeExpression(String property, Comparable<?> start, Comparable<?> end) {
         this.property = property;
         this.start = start;
         this.end = end;
@@ -28,7 +28,7 @@ public class RangeExpression<T> implements Specification<T> {
                                  CriteriaBuilder builder) {
 
         Expression expression = ExpressionUtils.getExpression(root, property);
-        return builder.between(expression, (Comparable) start, (Comparable) end);
+        return builder.between(expression, start, end);
 
     }
 }

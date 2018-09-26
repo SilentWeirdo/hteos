@@ -4,7 +4,7 @@
      * 即时通讯组件
      * */
     var Messages = HteOS.controller.Messages = function () {
-        this.onShellRendered = function () {
+        this.onViewRender = function () {
             this.init();
         }
     };
