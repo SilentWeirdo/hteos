@@ -2,8 +2,9 @@
 
     HteOS.store = {};
 
-    var Main = HteOS.controller.StoreMain = function () {
+    var Main = HteOS.controller.StoreMain = function (params) {
         this.server = HteOS.server || 'http://localhost';
+        this.params = params;
     };
 
     Main.prototype.onViewRender = function () {
@@ -29,13 +30,21 @@
 
         function search(searchKey, event) {
             if (searchKey) {
-                this.active = 'search';
+                self.vm.active = 'search';
                 self.search(searchKey);
             } else {
-                this.active = 'index';
+                self.vm.active = 'index';
                 self.loadIndex();
             }
         }
+
+        this.onNotify = function (params) {
+            var self = this;
+            if (params.key) {
+                self.vm.searchKey = params.key;
+                search(params.key);
+            }
+        };
 
         this.vm = new Vue({
             el: "#hte-module-" + self.module.id,
@@ -83,8 +92,13 @@
             }
         });
 
-        //加载首页
-        this.loadIndex();
+        if (self.params && self.params.key) {
+            self.vm.searchKey = self.params.key;
+            search(self.params.key);
+        } else {
+            //加载首页
+            self.loadIndex();
+        }
     };
 
     Main.prototype.loadIndex = function () {

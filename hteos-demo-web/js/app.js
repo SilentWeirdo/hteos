@@ -140,9 +140,10 @@
                     HteOS.TaskManager.start({
                         id: 'appmanager',
                         name: "我的应用",
-                        templateUrl: "appmanager.html",
+                        templateUrl: "tpl/appmanager.html",
                         controller: "HteOS.controller.AppManager",
-                        shell: 'dock'
+                        shell: 'dock',
+                        dependencies: "https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"
                     });
                 }
             }, {
@@ -216,9 +217,10 @@
                 HteOS.TaskManager.start({
                     id: "appmanager",
                     name: "我的应用",
-                    templateUrl: "appmanager.html",
+                    templateUrl: "tpl/appmanager.html",
                     shell: "dock",
-                    controller: "HteOS.controller.AppManager"
+                    controller: "HteOS.controller.AppManager",
+                    dependencies: "https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"
                 });
             }
         }, {

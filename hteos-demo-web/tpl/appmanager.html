@@ -1,0 +1,33 @@
+<div class="hte-appmanager hte-webkit-scrollbar">
+    <div class="hte-appmanager-body">
+        <input v-model="searchKey" type="text" class="form-control" @keyup="search()" placeholder="输入关键字进行搜索">
+        <div class="hte-appmanager-content" v-show="!searchKey">
+            <div v-for="group in groups" class="hte-appmanager-group" v-bind:class="{ collapsed: !group.expanded }">
+                <div class="hte-appmanager-group-header" @click="group.expanded = !group.expanded;" v-class="">
+                    <i class="glyphicon glyphicon-triangle-right " v-show="!group.expanded"></i>
+                    <i class="glyphicon glyphicon-triangle-bottom " v-show="group.expanded"></i>
+                    {{group.name}}
+                </div>
+                <div class="hte-appmanager-group-body">
+                    <div v-for="app in group.apps" :data-app="app.id" class="hte-appmanager-app" @click="openApp(app,$event)">
+                        <div class="hte-appmanager-app-icon"><img :src="app.icon"></div>
+                        <div class="hte-appmanager-app-name">{{app.name}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hte-appmanager-search-result" v-show="searchKey">
+            <div v-if="searchResult.length > 0" v-for="app in searchResult" class="hte-appmanager-app" @click="openApp(app,$event)">
+                <div class="hte-appmanager-app-icon"><img :src="app.icon"></div>
+                <div class="hte-appmanager-app-name">{{app.name}}</div>
+            </div>
+            <div v-if="searchResult.length == 0" class="text-center">
+                <button class="btn btn-default" @click="openStore()">
+                    <i class="fa fa-search"></i>
+                    没有匹配的应用，在应用市场中搜索
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

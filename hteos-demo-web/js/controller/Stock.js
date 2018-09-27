@@ -9,11 +9,11 @@
 		stock.$el = tile.getContent();
 		stock.duration =  1000 * 60 * 10;
 		stock.tpl = HteOS.Template.compile('<% for(i = 0;i < list.length; i++){ %>' + '<div class="hte-tile-live hte-tile-inner" >' + '<% if(list[i].scale > 0 ){ %>' + '<div class="stock-scale stock-rise">+<%=list[i].scale%>%</div>' + '<% } else { %>' + '<div class="stock-scale stock-reduce"><%=list[i].scale%>%</div>' + '<% } %>' + '<h4 class="stock-name"><%=list[i].name%></h4>' + '<div class="stock-value"><%=list[i].value%></div>' + '<% if(list[i].change > 0 ){ %>' + '<div class="stock-change stock-rise">+<%=list[i].change%></div>' + '<% } else { %>' + '<div class="stock-change stock-reduce"><%=list[i].change%></div>' + '<% } %>' + '</div>' + '<% } %>' + '<div class="hte-tile-text">新浪股票</div>');
+		this.start();
 	};
 	
 	Stock.prototype.start = function(){
         var stock = this;
-
         window.setInterval(function() {
             //stock.load();
         }, stock.duration);
