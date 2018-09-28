@@ -274,10 +274,12 @@
                     label: '反馈意见',
                     multiLine: true
                 }], function (btn, values) {
-                    if (btn == 'yes') {
-                        if (values.content) {
-                            saveFeedback(values);
-                        }
+                    if (btn == 'yes' && values.content) {
+                        $.post(HteOS.server + "/feedback/save", values).done(function () {
+                            HteOS.Notification.show("", "感谢", "感谢您的宝贵建议，我们将会认真评估",true);
+                        }).error(function () {
+                            HteOS.Notification.show("", "抱歉", "提交失败，请稍候再试",true);
+                        });
                     }
                 });
             }
