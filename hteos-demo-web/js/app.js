@@ -110,8 +110,10 @@
             icon: 'glyphicon glyphicon-lock',
             name: '锁定屏幕',
             handler: function () {
-                if (HteOS.User.logon === true) {
+                if (HteOS.Preference.logon === true) {
                     HteOS.Locker.lock();
+                } else {
+                    HteOS.Notification.show("", "提示", "登录后才可以锁定屏幕");
                 }
             }
         }, {

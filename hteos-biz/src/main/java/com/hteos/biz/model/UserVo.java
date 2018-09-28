@@ -1,5 +1,6 @@
 package com.hteos.biz.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 /**
@@ -32,5 +33,8 @@ public class UserVo {
     private Boolean logon;
 
     private String token;
+
+    @JsonIgnore
+    private String password;
 
 }

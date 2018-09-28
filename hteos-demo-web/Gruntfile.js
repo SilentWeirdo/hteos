@@ -10,11 +10,11 @@ module.exports = function (grunt) {
         'License On ：<%=pkg.license%> */\n',
         meta: {},
         concat: {
-            js: {
+            css: {
                 src: ['css/preloader.css','css/index.css','css/store.css'],
                 dest: 'dist/css/app.all.css'
             },
-            css: {
+            js: {
                 src: ['js/config/dist.js', 'js/app.js','js/controller/*.js', 'js/storage/Remote.js'],
                 dest: 'dist/js/app.all.js'
             }
