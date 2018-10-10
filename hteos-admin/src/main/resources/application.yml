@@ -15,9 +15,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    username: ${MYSQL_USERNAME:root}
-    password: ${MYSQL_PASSWORD:root}
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/hteos4?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: hteos
+    password: hteos
+    url: jdbc:mysql://127.0.0.1:3307/hteos?useUnicode=true&characterEncoding=UTF-8&useSSL=false
   jpa:
     show-sql: true
     hibernate:
@@ -42,9 +42,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    username: ${MYSQL_USERNAME:root}
-    password: ${MYSQL_PASSWORD:root}
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/hteos4?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: hteos
+    password: hteos
+    url: jdbc:mysql://127.0.0.1:3307/hteos?useUnicode=true&characterEncoding=UTF-8&useSSL=false
   jpa:
     properties:
       hibernate.dialect: org.hibernate.dialect.MySQLDialect
